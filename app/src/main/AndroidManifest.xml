@@ -7,17 +7,17 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/baseline_play_arrow_24"
+        android:icon="@drawable/btn_play_arrow_24"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/baseline_play_arrow_24"
+        android:roundIcon="@drawable/btn_play_arrow_24"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
         </activity>
-        <activity android:name=".PlayerActivity">
+        <activity android:name=".activities.PlayerActivity">
 
         </activity>
-        <activity android:name=".MenuActivity">
+        <activity android:name=".activities.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

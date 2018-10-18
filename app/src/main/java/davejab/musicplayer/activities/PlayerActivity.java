@@ -1,4 +1,4 @@
-package davejab.musicplayer;
+package davejab.musicplayer.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import davejab.musicplayer.R;
 import davejab.musicplayer.models.Song;
 import davejab.musicplayer.util.MediaStoreManager;
 import davejab.musicplayer.util.Time;

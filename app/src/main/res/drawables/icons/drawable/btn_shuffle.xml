@@ -8,7 +8,7 @@
         android:state_pressed="true" />
     <item android:drawable="@drawable/img_btn_shuffle_pressed"
         android:state_focused="true" />
-    <item android:drawable="@drawable/baseline_shuffle_white_24"
+    <item android:drawable="@drawable/img_shuffle_white_24"
         android:state_focused="false"
         android:state_pressed="false" />
 </selector>

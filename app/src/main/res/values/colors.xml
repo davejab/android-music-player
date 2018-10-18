@@ -7,5 +7,7 @@
 
 
     <color name="dark_app_bar">#212121</color>
+    <color name="dark_background">#303030</color>
+    <color name="dark_dialog">#424242</color>
 
 </resources>

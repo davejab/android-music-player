@@ -1,4 +1,4 @@
-package davejab.musicplayer;
+package davejab.musicplayer.activities;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import davejab.musicplayer.R;
 import davejab.musicplayer.util.MediaStoreManager;
 import davejab.musicplayer.models.Song;
 
