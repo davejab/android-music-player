@@ -10,5 +10,7 @@ public interface Queryable {
     String getSelection();
     String getOrder();
 
+    void setSelection(Item item);
+
     Item cursorToItem(Cursor cursor);
 }

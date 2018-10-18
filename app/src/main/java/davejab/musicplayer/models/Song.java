@@ -22,6 +22,9 @@ public class Song extends Item{
 
     // Instance
 
+    private String selection;
+    private String order = Media.DEFAULT_SORT_ORDER;
+
     @Override
     public Uri getExternalUri() {
         return EXTERNAL_URI;
@@ -34,12 +37,21 @@ public class Song extends Item{
 
     @Override
     public String getSelection() {
-        return null;
+        return this.selection;
     }
 
     @Override
     public String getOrder() {
-        return null;
+        return this.order;
+    }
+
+    @Override
+    public void setSelection(Item item) {
+        if (item instanceof Artist) {
+            this.selection = Media.ARTIST + " = " + item.getId();
+        } else if (item instanceof Album){
+            this.selection = Media.ALBUM + " = " + item.getId();
+        }
     }
 
     @Override

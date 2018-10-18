@@ -10,10 +10,14 @@ public class Artist extends Item{
 
     private static Uri EXTERNAL_URI = Artists.EXTERNAL_CONTENT_URI;
     private static String[] PROJECTION = {
+            Artists._ID,
             Artists.ARTIST,
     };
 
     // Instance
+
+    private String selection;
+    private String order = Artists.DEFAULT_SORT_ORDER;
 
     @Override
     public Uri getExternalUri() {
@@ -27,18 +31,24 @@ public class Artist extends Item{
 
     @Override
     public String getSelection() {
-        return null;
+        return this.selection;
     }
 
     @Override
     public String getOrder() {
-        return null;
+        return this.order;
+    }
+
+    @Override
+    public void setSelection(Item item) {
+
     }
 
     @Override
     public Item cursorToItem(Cursor cursor) {
         Artist artist = new Artist();
-        artist.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[0])));
+        artist.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
+        artist.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
         return artist;
     }
 

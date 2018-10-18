@@ -2,21 +2,16 @@ package davejab.musicplayer.models;
 
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Parcelable;
 
 public abstract class Item implements Queryable{
 
-    private String id;
+    private long id;
 
-    protected Item(){
-        //setId(id);
-    }
-
-    public String getId(){
+    public long getId(){
         return this.id;
     }
 
-    protected void setId(String id){
+    protected void setId(long id){
         this.id = id;
     }
 
