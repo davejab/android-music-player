@@ -1,5 +1,7 @@
 package davejab.musicplayer.models;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
@@ -9,6 +11,7 @@ public class Song extends Item{
 
     // Static
 
+    private static Uri EXTERNAL_URI = Media.EXTERNAL_CONTENT_URI;
     private static String[] PROJECTION = {
             Media.TITLE,
             Media.ALBUM,
@@ -16,26 +19,35 @@ public class Song extends Item{
             Media.DATA,
             Media.DURATION
     };
-    public static String[] getProjection(){
-        return PROJECTION;
-    }
-
-    public static final Parcelable.Creator<Song> CREATOR = new Parcelable.Creator<Song>() {
-        public Song createFromParcel(Parcel parcel) {
-            return new Song(parcel);
-        }
-        public Song[] newArray(int size) {
-            return new Song[size];
-        }
-    };
 
     // Instance
 
-    public Song(){}
+    @Override
+    public Uri getExternalUri() {
+        return EXTERNAL_URI;
+    }
 
-    public Song(Parcel parcel){
-        setTitle(parcel.readString());
-        setData(parcel.readString());
+    @Override
+    public String[] getProjection() {
+        return PROJECTION;
+    }
+
+    @Override
+    public String getSelection() {
+        return null;
+    }
+
+    @Override
+    public String getOrder() {
+        return null;
+    }
+
+    @Override
+    public Item cursorToItem(Cursor cursor) {
+        Song song = new Song();
+        song.setTitle(cursor.getString(cursor.getColumnIndex(getProjection()[0])));
+        song.setData(cursor.getString(cursor.getColumnIndex(getProjection()[0])));
+        return song;
     }
 
     private String title;
@@ -54,14 +66,4 @@ public class Song extends Item{
         this.data = data;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeString(getTitle());
-        parcel.writeString(getData());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 }
