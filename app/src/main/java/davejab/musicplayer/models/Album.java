@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore.Audio.Albums;
 
-public class Album extends Item{
+public class Album extends Artist{
 
     // Static
 
@@ -12,6 +12,9 @@ public class Album extends Item{
     private static String[] PROJECTION = {
             Albums._ID,
             Albums.ALBUM,
+            Albums.ALBUM_KEY,
+            Albums.ALBUM_ART,
+            Albums.ARTIST
     };
 
     // Instance
@@ -42,7 +45,8 @@ public class Album extends Item{
     @Override
     public void setSelection(Item item) {
         if (item instanceof Artist) {
-            this.selection = Albums.ARTIST + " = " + item.getId();
+            Artist artist = (Artist) item;
+            this.selection = Albums.ARTIST+" = '"+artist.getArtist()+"'";
         }
     }
 
@@ -51,16 +55,32 @@ public class Album extends Item{
         Album album = new Album();
         album.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
         album.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
+        album.setAlbumKey(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
+        album.setAlbumArt(cursor.getString(cursor.getColumnIndex(getProjection()[3])));
+        album.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[4])));
         return album;
     }
 
     private String album;
+    private String albumArt;
+    private String albumKey;
 
     public String getAlbum(){
         return this.album;
     }
+    public String getAlbumArt(){
+        return this.albumArt;
+    }
+    public String getAlbumKey(){
+        return this.albumKey;
+    }
     public void setAlbum(String album){
         this.album = album;
     }
-
+    public void setAlbumArt(String albumArt){
+        this.albumArt = albumArt;
+    }
+    public void setAlbumKey(String albumKey){
+        this.albumKey = albumKey;
+    }
 }

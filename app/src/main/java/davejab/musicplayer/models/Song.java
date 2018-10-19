@@ -2,22 +2,21 @@ package davejab.musicplayer.models;
 
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.Media;
+import android.util.Log;
 
-public class Song extends Item{
+public class Song extends Album{
 
     // Static
 
     private static Uri EXTERNAL_URI = Media.EXTERNAL_CONTENT_URI;
     private static String[] PROJECTION = {
-            Media.TITLE,
-            Media.ALBUM,
-            Media.ARTIST,
+            Media._ID,
             Media.DATA,
-            Media.DURATION
+            Media.TITLE,
+            Media.DURATION,
+            Media.ALBUM,
+            Media.ARTIST
     };
 
     // Instance
@@ -47,35 +46,48 @@ public class Song extends Item{
 
     @Override
     public void setSelection(Item item) {
-        if (item instanceof Artist) {
-            this.selection = Media.ARTIST + " = " + item.getId();
-        } else if (item instanceof Album){
-            this.selection = Media.ALBUM + " = " + item.getId();
+        if (item instanceof Album){
+            Album album = (Album) item;
+            this.selection = Media.ALBUM+" = '"+album.getAlbum()+"'";
+            this.order = Media.TRACK+" ASC";
+        } else if (item instanceof Artist) {
+            Artist artist = (Artist) item;
+            this.selection = Media.ARTIST+" = '"+artist.getArtist()+"'";
         }
     }
 
     @Override
     public Item cursorToItem(Cursor cursor) {
         Song song = new Song();
-        song.setTitle(cursor.getString(cursor.getColumnIndex(getProjection()[0])));
-        song.setData(cursor.getString(cursor.getColumnIndex(getProjection()[0])));
+        song.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
+        song.setData(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
+        song.setTitle(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
+        song.setDuration(cursor.getString(cursor.getColumnIndex(getProjection()[3])));
+        song.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[4])));
+        song.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[5])));
         return song;
     }
 
-    private String title;
     private String data;
+    private String title;
+    private String duration;
 
-    public String getTitle(){
-        return this.title;
-    }
     public String getData(){
         return this.data;
     }
-    public void setTitle(String title){
-        this.title = title;
+    public String getTitle(){
+        return this.title;
+    }
+    public String getDuration(){
+        return this.duration;
     }
     public void setData(String data){
         this.data = data;
     }
-
+    public void setTitle(String title){
+        this.title = title;
+    }
+    public void setDuration(String duration){
+        this.duration = duration;
+    }
 }
