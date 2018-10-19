@@ -17,7 +17,6 @@ import java.util.Random;
 
 import davejab.musicplayer.R;
 import davejab.musicplayer.models.Song;
-import davejab.musicplayer.main.MediaStoreManager;
 import davejab.musicplayer.util.Time;
 
 public class PlayerActivity extends Activity implements MediaPlayer.OnCompletionListener, SeekBar.OnSeekBarChangeListener {
@@ -73,7 +72,7 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
 
 
         // Getting all songs list
-        //songsList = new MediaStoreManager(getContentResolver()).getSongsList();
+        //songsList = new MediaManager(getContentResolver()).getSongsList();
 
         Intent intent = getIntent();
         //<Song> songs = (ArrayList<Song>) intent.getParcelableExtra("songList");

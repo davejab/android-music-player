@@ -11,7 +11,7 @@ import davejab.musicplayer.models.Item;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-public class MediaStoreManager {
+public class MediaManager {
 
     // Static
 
@@ -26,9 +26,8 @@ public class MediaStoreManager {
 
     private ContentResolver contentResolver;
 
-    public MediaStoreManager(ContentResolver contentResolver){
+    public MediaManager(ContentResolver contentResolver){
         setContentResolver(contentResolver);
-
     }
 
     public List<Item> getList(Item item){

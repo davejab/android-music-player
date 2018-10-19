@@ -5,7 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import davejab.musicplayer.main.MediaStoreManager;
+import davejab.musicplayer.main.MediaManager;
 import davejab.musicplayer.models.Album;
 import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.models.Item;
@@ -31,7 +31,7 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("davejab.musicplayer", appContext.getPackageName());
 
-        MediaStoreManager msm = new MediaStoreManager(appContext.getContentResolver());
+        MediaManager msm = new MediaManager(appContext.getContentResolver());
 
         List<Item> artists = msm.getList(new Artist());
         Artist artist = new Artist();

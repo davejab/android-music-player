@@ -3,19 +3,21 @@ package davejab.musicplayer.activities;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import davejab.musicplayer.R;
-import davejab.musicplayer.main.MediaStoreManager;
-import davejab.musicplayer.models.Artist;
+import davejab.musicplayer.main.Library;
+import davejab.musicplayer.main.MediaManager;
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
+import davejab.musicplayer.views.ArtistAdapter;
 
 public class MenuActivity extends ListActivity {
 
@@ -25,29 +27,34 @@ public class MenuActivity extends ListActivity {
         setContentView(R.layout.activity_menu);
 
         // Get required permissions
-        requestPermissions(MediaStoreManager.getPermissions(), 0);
+        requestPermissions(MediaManager.getPermissions(), 0);
 
-        // Initialise media store manager
-        MediaStoreManager msm = new MediaStoreManager(getContentResolver());
-        // Get song list
-        final List<Item> list = msm.getList(new Artist());
+        Library lib = Library.getLibrary(getContentResolver());
 
-        // TODO delete this
-        List<String> artists = new ArrayList<>();
-        for (Item i : list){
-            Artist a = (Artist) i;
-            artists.add(a.getArtist());
+        Intent intent = getIntent();
+        int songIndex = intent.getIntExtra("songIndex", -1);
+
+        if (songIndex >= 0){
+            // If song index is present we advance through the menu
+            lib.getNextList(lib.getItemList().get(songIndex));
         }
+        final List<Item> list = lib.getItemList();
 
-        // TODO Create custom adapter
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, R.id.label, artists));
+        // TODO Create custom adapters
+        // setListAdapter(item.getAdapter(this, list));
+        setListAdapter(new ArtistAdapter(this, list));
+
         ListView lv = getListView();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Pass selected song to the player
-                //Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
-                //intent.putExtra("song", songlist.get(position));
-                //startActivity(intent);
+                // TODO there is a better way to do this
+                Class clss = MenuActivity.class;
+                if (list.get(position) instanceof Song) {
+                    clss = PlayerActivity.class;
+                }
+                Intent intent = new Intent(getApplicationContext(), clss);
+                intent.putExtra("songIndex", position);
+                startActivity(intent);
             }
         });
     }
