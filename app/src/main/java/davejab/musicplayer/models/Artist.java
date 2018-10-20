@@ -1,8 +1,15 @@
 package davejab.musicplayer.models;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore.Audio.Artists;
+import android.widget.Adapter;
+import android.widget.ListAdapter;
+
+import java.util.List;
+
+import davejab.musicplayer.views.ArtistAdapter;
 
 public class Artist extends Item{
 

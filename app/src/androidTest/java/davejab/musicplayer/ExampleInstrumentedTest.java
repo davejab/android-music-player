@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import davejab.musicplayer.main.Library;
 import davejab.musicplayer.main.MediaManager;
 import davejab.musicplayer.models.Album;
 import davejab.musicplayer.models.Artist;
@@ -31,9 +32,10 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("davejab.musicplayer", appContext.getPackageName());
 
-        MediaManager msm = new MediaManager(appContext.getContentResolver());
+        //MediaManager msm = new MediaManager(appContext.getContentResolver());
+        Library lib = Library.getLibrary(appContext.getContentResolver());
 
-        List<Item> artists = msm.getList(new Artist());
+        List<Item> artists = lib.getItemList();
         Artist artist = new Artist();
         for (Item i : artists) {
             Artist a = (Artist) i;
@@ -43,24 +45,33 @@ public class ExampleInstrumentedTest {
             }
         }
 
-        Album al = new Album();
-        al.setSelection(artist);
-        List<Item> albums = msm.getList(al);
+        List<Item> albums = lib.getNextList(artist);
         Album album = new Album();
         for (Item i : albums) {
             Album a = (Album) i;
+            Log.d("DABRA", a.getAlbum());
             if (a.getAlbum().equals("My Beautiful Dark Twisted Fantasy")){
                 album = a;
             }
         }
-        Log.d("DABRA", album.getAlbum()+"");
 
-        Song song = new Song();
-        song.setSelection(album);
-        List<Item> songs = msm.getList(song);
-        for (Item i : songs) {
-            Song a = (Song) i;
-            Log.d("DABRA", a.getTitle()+"");
+        //lib.getLastList();
+        for (Item i : lib.getLastList()) {
+            Artist a = (Artist) i;
+
+            if (a.getArtist().equals("Kanye West")){
+                Log.d("DABRA", a.getArtist());
+            }
         }
+
+//        Song song = new Song();
+//        song.setSelection(album);
+//        List<Item> songs = msm.getList(song);
+//        for (Item i : songs) {
+//            Song a = (Song) i;
+//            Log.d("DABRA", a.getTitle()+"");
+//        }
+
+
     }
 }

@@ -1,9 +1,14 @@
 package davejab.musicplayer.models;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.widget.Adapter;
+import android.widget.ListAdapter;
 
-public abstract class Item implements Queryable{
+import java.util.List;
+
+public abstract class Item {
 
     private long id;
 
@@ -20,6 +25,8 @@ public abstract class Item implements Queryable{
     public abstract String[] getProjection();
     public abstract String getSelection();
     public abstract String getOrder();
+
+    public abstract void setSelection(Item item);
 
     public abstract Item cursorToItem(Cursor cursor);
 

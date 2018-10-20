@@ -4,24 +4,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import davejab.musicplayer.R;
+import davejab.musicplayer.models.Album;
 import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.models.Item;
 
-public class ArtistAdapter extends ArrayAdapter<Item> implements View.OnClickListener{
+public class AlbumAdapter extends ArrayAdapter<Item> implements View.OnClickListener{
 
     // Static
 
     // TODO
-    private static int RESOURCE = R.layout.list_item_artist;
+    private static int RESOURCE = R.layout.list_item_album;
 
     private static int getResource(){
         return RESOURCE;
@@ -29,22 +27,22 @@ public class ArtistAdapter extends ArrayAdapter<Item> implements View.OnClickLis
 
     // Instance
 
-    private List<Item> artistList;
+    private List<Item> albumList;
 
-    public ArtistAdapter(Context context, List<Item> artistList) {
-        super(context, getResource(), artistList);
-        setArtistList(artistList);
+    public AlbumAdapter(Context context, List<Item> albumList) {
+        super(context, getResource(), albumList);
+        setAlbumList(albumList);
     }
 
     private static class ViewHolder {
-        TextView txtArtist;
+        TextView txtAlbum;
     }
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Artist artist = (Artist) getItem(position);
+        Album album = (Album) getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
@@ -54,7 +52,7 @@ public class ArtistAdapter extends ArrayAdapter<Item> implements View.OnClickLis
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(getResource(), parent, false);
-            viewHolder.txtArtist = convertView.findViewById(R.id.artist);
+            viewHolder.txtAlbum = convertView.findViewById(R.id.album);
             //result=convertView;
             convertView.setTag(viewHolder);
         } else {
@@ -62,7 +60,7 @@ public class ArtistAdapter extends ArrayAdapter<Item> implements View.OnClickLis
             //result=convertView;
         }
 
-        viewHolder.txtArtist.setText(artist.getArtist());
+        viewHolder.txtAlbum.setText(album.getAlbum());
         // Return the completed view to render on screen
         return convertView;
     }
@@ -72,11 +70,11 @@ public class ArtistAdapter extends ArrayAdapter<Item> implements View.OnClickLis
 
     }
 
-    private List<Item> getArtistList(){
-        return this.artistList;
+    private List<Item> getAlbumList(){
+        return this.albumList;
     }
-    private void setArtistList(List<Item> artistList){
-        this.artistList = artistList;
+    private void setAlbumList(List<Item> albumList){
+        this.albumList = albumList;
     }
 
 }
