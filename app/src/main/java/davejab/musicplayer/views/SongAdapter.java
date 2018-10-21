@@ -9,31 +9,31 @@ import android.widget.TextView;
 import java.util.List;
 
 import davejab.musicplayer.R;
-import davejab.musicplayer.models.Album;
+import davejab.musicplayer.models.Song;
 import davejab.musicplayer.models.Item;
 
-public class AlbumAdapter extends ItemAdapter implements View.OnClickListener{
+public class SongAdapter extends ItemAdapter implements View.OnClickListener{
 
-    public AlbumAdapter(Context context, List<Item> albumList) {
-        super(context, R.layout.list_item_album, albumList);
+    public SongAdapter(Context context, List<Item> albumList) {
+        super(context, R.layout.list_item_song, albumList);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder;
-        Album album = (Album) getItem(position);
+        Song album = (Song) getItem(position);
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(getResource(), parent, false);
-            viewHolder.txtAlbum = convertView.findViewById(R.id.album);
+            viewHolder.txtTitle = convertView.findViewById(R.id.title);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.txtAlbum.setText(album.getAlbum());
+        viewHolder.txtTitle.setText(album.getTitle());
         return convertView;
     }
 
@@ -43,7 +43,7 @@ public class AlbumAdapter extends ItemAdapter implements View.OnClickListener{
     }
 
     private static class ViewHolder {
-        TextView txtAlbum;
+        TextView txtTitle;
     }
 
 }

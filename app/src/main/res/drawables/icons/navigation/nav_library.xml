@@ -19,6 +19,16 @@
         android:id="@+id/albumFragment"
         android:name="davejab.musicplayer.activities.fragments.AlbumFragment"
         android:label="fragment_album"
-        tools:layout="@layout/fragment_album" />
+        tools:layout="@layout/fragment_album">
+        <action
+            android:id="@+id/action_albumFragment_to_songFragment"
+            app:destination="@id/songFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/songFragment"
+        android:name="davejab.musicplayer.activities.fragments.SongFragment"
+        android:label="fragment_song"
+        tools:layout="@layout/fragment_song" />
 
 </navigation>
