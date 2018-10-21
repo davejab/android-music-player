@@ -12,8 +12,6 @@
         android:roundIcon="@drawable/btn_play_arrow_24"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
-        </activity>
         <activity android:name=".activities.PlayerActivity">
 
         </activity>
