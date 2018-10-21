@@ -12,9 +12,18 @@ import davejab.musicplayer.models.Song;
 
 public class Library {
 
-    // Static
-
     private static Library LIBRARY = null;
+
+    private Item currentItem;
+    private List<Item> currentList;
+    private Stack<List<Item>> history;
+
+    private Library(ContentResolver contentResolver){
+        setCurrentItem(new Artist(contentResolver));
+        setCurrentList(getCurrentItem().toList());
+        setHistory(new Stack<List<Item>>());
+    }
+
     public static Library getLibrary(ContentResolver contentResolver){
         if (LIBRARY == null){
             LIBRARY = new Library(contentResolver);
@@ -22,65 +31,46 @@ public class Library {
         return LIBRARY;
     }
 
-    // Instance
-
-    private Item currentItem;
-    private List<Item> itemList;
-    private Stack<List<Item>> history;
-    private MediaManager mediaManager;
-
-    private Library(ContentResolver contentResolver){
-        setMediaManager(new MediaManager(contentResolver));
-        setCurrentItem(new Artist());
-        setItemList(getMediaManager().getList(getCurrentItem()));
-        setHistory(new Stack<List<Item>>());
-    }
-
-    public List<Item> getNextList(Item item){
+    public List<Item> getNextList(int index){
+        Item item = getCurrentList().get(index);
         Item newItem;
         if (item instanceof Album){
-            newItem = new Song();
+            newItem = new Song(getCurrentItem().getContentResolver());
         }else if (item instanceof Artist){
-            newItem = new Album();
+            newItem = new Album(getCurrentItem().getContentResolver());
         }else{
-            return getItemList();
+            return getCurrentList();
         }
-        newItem.setSelection(item);
         setCurrentItem(newItem);
-        getHistory().push(getItemList());
-        setItemList(getMediaManager().getList(newItem));
-        return getItemList();
+        getCurrentItem().setItemSelection(item);
+        getHistory().push(getCurrentList());
+        setCurrentList(getCurrentItem().toList());
+        return getCurrentList();
     }
 
     public List<Item> getLastList() {
         List<Item> list = getHistory().pop();
-        setItemList(list);
-        return getItemList();
+        setCurrentList(list);
+        return getCurrentList();
     }
 
     public Item getCurrentItem(){
         return this.currentItem;
     }
-    public List<Item> getItemList(){
-        return this.itemList;
+    public List<Item> getCurrentList(){
+        return this.currentList;
     }
     private Stack<List<Item>> getHistory(){
         return this.history;
     }
-    private MediaManager getMediaManager(){
-        return this.mediaManager;
-    }
     private void setCurrentItem(Item currentItem){
         this.currentItem = currentItem;
     }
-    private void setItemList(List<Item> itemList){
-        this.itemList = itemList;
+    private void setCurrentList(List<Item> currentList){
+        this.currentList = currentList;
     }
     private void setHistory(Stack<List<Item>> history){
         this.history = history;
-    }
-    private void setMediaManager(MediaManager mediaManager){
-        this.mediaManager = mediaManager;
     }
 
 }

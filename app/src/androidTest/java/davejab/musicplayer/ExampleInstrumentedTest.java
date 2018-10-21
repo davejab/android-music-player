@@ -6,11 +6,9 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import davejab.musicplayer.main.Library;
-import davejab.musicplayer.main.MediaManager;
 import davejab.musicplayer.models.Album;
 import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.models.Item;
-import davejab.musicplayer.models.Song;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,39 +31,39 @@ public class ExampleInstrumentedTest {
         assertEquals("davejab.musicplayer", appContext.getPackageName());
 
         //MediaManager msm = new MediaManager(appContext.getContentResolver());
-        Library lib = Library.getLibrary(appContext.getContentResolver());
+//        Library lib = Library.getLibrary(appContext.getContentResolver());
 
-        List<Item> artists = lib.getItemList();
-        Artist artist = new Artist();
-        for (Item i : artists) {
-            Artist a = (Artist) i;
-
-            if (a.getArtist().equals("Kanye West")){
-                artist = a;
-            }
-        }
-
-        List<Item> albums = lib.getNextList(artist);
-        Album album = new Album();
-        for (Item i : albums) {
-            Album a = (Album) i;
-            Log.d("DABRA", a.getAlbum());
-            if (a.getAlbum().equals("My Beautiful Dark Twisted Fantasy")){
-                album = a;
-            }
-        }
-
-        //lib.getLastList();
-        for (Item i : lib.getLastList()) {
-            Artist a = (Artist) i;
-
-            if (a.getArtist().equals("Kanye West")){
-                Log.d("DABRA", a.getArtist());
-            }
-        }
+//        List<Item> artists = lib.getCurrentList();
+//        Artist artist = new Artist();
+//        for (Item i : artists) {
+//            Artist a = (Artist) i;
+//
+//            if (a.getArtist().equals("Kanye West")){
+//                artist = a;
+//            }
+//        }
+//
+//        List<Item> albums = lib.getNextList(artist);
+//        Album album = new Album();
+//        for (Item i : albums) {
+//            Album a = (Album) i;
+//            Log.d("DABRA", a.getAlbum());
+//            if (a.getAlbum().equals("My Beautiful Dark Twisted Fantasy")){
+//                album = a;
+//            }
+//        }
+//
+//        //lib.getLastList();
+//        for (Item i : lib.getLastList()) {
+//            Artist a = (Artist) i;
+//
+//            if (a.getArtist().equals("Kanye West")){
+//                Log.d("DABRA", a.getArtist());
+//            }
+//        }
 
 //        Song song = new Song();
-//        song.setSelection(album);
+//        song.setItemSelection(album);
 //        List<Item> songs = msm.getList(song);
 //        for (Item i : songs) {
 //            Song a = (Song) i;

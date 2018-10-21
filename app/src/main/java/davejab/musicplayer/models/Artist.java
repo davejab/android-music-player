@@ -1,65 +1,44 @@
 package davejab.musicplayer.models;
 
-import android.content.Context;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore.Audio.Artists;
-import android.widget.Adapter;
-import android.widget.ListAdapter;
-
-import java.util.List;
-
-import davejab.musicplayer.views.ArtistAdapter;
 
 public class Artist extends Item{
 
-    // Static
+    private String artist;
 
-    private static Uri EXTERNAL_URI = Artists.EXTERNAL_CONTENT_URI;
-    private static String[] PROJECTION = {
-            Artists._ID,
-            Artists.ARTIST,
-    };
-
-    // Instance
-
-    private String selection;
-    private String order = Artists.DEFAULT_SORT_ORDER;
+    public Artist(ContentResolver contentResolver) {
+        super(contentResolver);
+        setOrder(Artists.DEFAULT_SORT_ORDER);
+    }
 
     @Override
     public Uri getExternalUri() {
-        return EXTERNAL_URI;
+        return Artists.EXTERNAL_CONTENT_URI;
     }
 
     @Override
     public String[] getProjection() {
-        return PROJECTION;
+        return new String[] {
+                Artists._ID,
+                Artists.ARTIST,
+        };
     }
 
     @Override
-    public String getSelection() {
-        return this.selection;
-    }
-
-    @Override
-    public String getOrder() {
-        return this.order;
-    }
-
-    @Override
-    public void setSelection(Item item) {
+    public void setItemSelection(Item item) {
 
     }
 
     @Override
-    public Item cursorToItem(Cursor cursor) {
-        Artist artist = new Artist();
+    protected Artist cursorToItem(Cursor cursor) {
+        Artist artist = new Artist(getContentResolver());
         artist.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
         artist.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
         return artist;
     }
-
-    private String artist;
 
     public String getArtist(){
         return this.artist;

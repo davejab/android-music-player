@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 
 import androidx.navigation.Navigation;
 import davejab.musicplayer.R;
-import davejab.musicplayer.activities.LibraryActivity;
 import davejab.musicplayer.main.Library;
 import davejab.musicplayer.views.ArtistAdapter;
 
@@ -31,7 +30,7 @@ public class ArtistFragment extends ListFragment implements AdapterView.OnItemCl
     public void onStart() {
         super.onStart();
         Log.d("DABRA", "");
-        ArtistAdapter adapter = new ArtistAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getItemList());
+        ArtistAdapter adapter = new ArtistAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
     }
@@ -40,7 +39,7 @@ public class ArtistFragment extends ListFragment implements AdapterView.OnItemCl
     public void onResume() {
         super.onResume();
         Log.d("DABRA", "");
-        ArtistAdapter adapter = new ArtistAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getItemList());
+        ArtistAdapter adapter = new ArtistAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
     }
@@ -48,7 +47,7 @@ public class ArtistFragment extends ListFragment implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
         Library lib = Library.getLibrary(getActivity().getContentResolver());
-        lib.getNextList(lib.getItemList().get(position));
+        lib.getNextList(position);
         Navigation.findNavController(view).navigate(R.id.action_artistFragment_to_albumFragment);
 
 //        ((LibraryActivity) getActivity()).getMenuStatePagerAdapter().addFragment(new AlbumFragment());

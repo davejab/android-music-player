@@ -11,7 +11,6 @@ import android.widget.Toast;
 import davejab.musicplayer.R;
 import davejab.musicplayer.main.Library;
 import davejab.musicplayer.views.AlbumAdapter;
-import davejab.musicplayer.views.ArtistAdapter;
 
 public class AlbumFragment extends ListFragment implements AdapterView.OnItemClickListener {
     @Override
@@ -23,7 +22,7 @@ public class AlbumFragment extends ListFragment implements AdapterView.OnItemCli
 //    @Override
 //    public void onActivityCreated(Bundle savedInstanceState) {
 //        super.onActivityCreated(savedInstanceState);
-//        AlbumAdapter adapter = new AlbumAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getItemList());
+//        AlbumAdapter adapter = new AlbumAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
 //        setListAdapter(adapter);
 //        getListView().setOnItemClickListener(this);
 //    }
@@ -32,7 +31,7 @@ public class AlbumFragment extends ListFragment implements AdapterView.OnItemCli
     @Override
     public void onStart() {
         super.onStart();
-        AlbumAdapter adapter = new AlbumAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getItemList());
+        AlbumAdapter adapter = new AlbumAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
     }
@@ -40,7 +39,7 @@ public class AlbumFragment extends ListFragment implements AdapterView.OnItemCli
     @Override
     public void onResume() {
         super.onResume();
-        AlbumAdapter adapter = new AlbumAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getItemList());
+        AlbumAdapter adapter = new AlbumAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
     }
