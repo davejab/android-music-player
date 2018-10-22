@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/btn_play_arrow_24"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PlayerActivity">
+        <activity android:name=".activities.PlayerActivity"
+            android:launchMode="singleInstance">
 
         </activity>
         <activity android:name=".activities.LibraryActivity">

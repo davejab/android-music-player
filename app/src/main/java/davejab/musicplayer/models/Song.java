@@ -9,7 +9,7 @@ public class Song extends Album{
 
     private String data;
     private String title;
-    private String duration;
+    private long duration;
 
     public Song(ContentResolver contentResolver) {
         super(contentResolver);
@@ -51,7 +51,7 @@ public class Song extends Album{
         song.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
         song.setData(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
         song.setTitle(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
-        song.setDuration(cursor.getString(cursor.getColumnIndex(getProjection()[3])));
+        song.setDuration(cursor.getLong(cursor.getColumnIndex(getProjection()[3])));
         song.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[4])));
         song.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[5])));
         return song;
@@ -63,7 +63,7 @@ public class Song extends Album{
     public String getTitle(){
         return this.title;
     }
-    public String getDuration(){
+    public long getDuration(){
         return this.duration;
     }
     public void setData(String data){
@@ -72,7 +72,7 @@ public class Song extends Album{
     public void setTitle(String title){
         this.title = title;
     }
-    public void setDuration(String duration){
+    public void setDuration(long duration){
         this.duration = duration;
     }
 }

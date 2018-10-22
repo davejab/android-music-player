@@ -1,5 +1,6 @@
 package davejab.musicplayer.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -7,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import androidx.navigation.Navigation;
 import davejab.musicplayer.R;
+import davejab.musicplayer.activities.PlayerActivity;
 import davejab.musicplayer.main.Library;
 import davejab.musicplayer.views.SongAdapter;
 
@@ -29,10 +30,10 @@ public class SongFragment extends ListFragment implements AdapterView.OnItemClic
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-//        Library lib = Library.getLibrary(getActivity().getContentResolver());
-//        lib.getNextList(position);
-//        Navigation.findNavController(view).navigate(R.id.action_artistFragment_to_albumFragment);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity().getApplicationContext(), PlayerActivity.class);
+        intent.putExtra("songIndex", position);
+        startActivity(intent);
     }
 
 }

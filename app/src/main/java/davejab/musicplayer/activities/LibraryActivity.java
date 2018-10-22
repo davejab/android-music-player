@@ -10,7 +10,6 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class LibraryActivity extends FragmentActivity {
 
-
     private static String[] PERMISSIONS = {
             READ_EXTERNAL_STORAGE
     };
@@ -18,7 +17,7 @@ public class LibraryActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_library);
 
         // TODO Move this elsewhere
         // Get required permissions
