@@ -21,7 +21,7 @@ import davejab.musicplayer.main.Player;
 import davejab.musicplayer.models.Song;
 import davejab.musicplayer.util.Time;
 
-public class PlayerActivity extends Activity implements MediaPlayer.OnCompletionListener, SeekBar.OnSeekBarChangeListener {
+public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeListener {
 
     private ImageButton btnPlay;
     private ImageButton btnNext;
@@ -67,7 +67,7 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
         setTime(new Time());
         setProgressHandler(new Handler());
 
-        setPlayer(Player.getPlayer(this));
+        setPlayer(Player.getPlayer());
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("songIndex", 0);
@@ -160,11 +160,6 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
         int currentPosition = time.progressToTimer(seekBar.getProgress(), totalDuration);
         getPlayer().seek(currentPosition);
         updateProgressBar();
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer arg0) {
-
     }
 
     private Handler getProgressHandler(){

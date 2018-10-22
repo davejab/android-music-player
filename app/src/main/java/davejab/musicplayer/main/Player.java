@@ -4,11 +4,12 @@ import android.media.MediaPlayer;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
 
-public class Player {
+public class Player implements MediaPlayer.OnCompletionListener {
 
     private static Player PLAYER = null;
 
@@ -20,16 +21,16 @@ public class Player {
     private boolean shuffle = false;
     private boolean repeat = false;
 
-    private Player(MediaPlayer.OnCompletionListener onCompletionListener){
+    private Player(){
         setMediaPlayer(new MediaPlayer());
-        getMediaPlayer().setOnCompletionListener(onCompletionListener);
+        getMediaPlayer().setOnCompletionListener(this);
         setShuffle(false);
         setRepeat(false);
     }
 
-    public static Player getPlayer(MediaPlayer.OnCompletionListener onCompletionListener) {
+    public static Player getPlayer() {
         if (PLAYER == null){
-            PLAYER = new Player(onCompletionListener);
+            PLAYER = new Player();
         }
         return PLAYER;
     }
@@ -37,6 +38,29 @@ public class Player {
     public Song getCurrentSong(){
         Song currentSong = (Song) getPlaylist().get(getCurrentSongIndex());
         return currentSong;
+    }
+
+    public long getCurrentPosition(){
+        return getMediaPlayer().getCurrentPosition();
+    }
+
+    private int getSongCount(){
+        return getPlaylist().size();
+    }
+
+    private void getNextSong(){
+        if(getRepeat()){
+            return;
+        } else if(getShuffle()){
+            Random rand = new Random();
+            setCurrentSongIndex(rand.nextInt((getSongCount() - 1) + 1));
+        } else{
+            if(getCurrentSongIndex() < (getSongCount() - 1)){
+                setCurrentSongIndex(getCurrentSongIndex() + 1);
+            }else{
+                setCurrentSongIndex(0);
+            }
+        }
     }
 
     public void playSong(Song song){
@@ -56,11 +80,7 @@ public class Player {
     }
 
     public void next(){
-        if(getCurrentSongIndex() < (getSongCount() - 1)){
-            setCurrentSongIndex(getCurrentSongIndex() + 1);
-        } else {
-            setCurrentSongIndex(0);
-        }
+        getNextSong();
         playSong(getCurrentSong());
     }
 
@@ -77,8 +97,7 @@ public class Player {
         if (getShuffle()) {
             setShuffle(false);
         } else {
-            setRepeat(true);
- //           setShuffle(false);
+            setShuffle(true);
         }
         return getShuffle();
     }
@@ -88,21 +107,18 @@ public class Player {
             setRepeat(false);
         } else {
             setRepeat(true);
-  //          setShuffle(false);
         }
         return getRepeat();
-    }
-
-    public long getCurrentPosition(){
-        return getMediaPlayer().getCurrentPosition();
     }
 
     public void seek(int position){
         getMediaPlayer().seekTo(position);
     }
 
-    private int getSongCount(){
-        return getPlaylist().size();
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        getNextSong();
+        playSong(getCurrentSong());
     }
 
     private MediaPlayer getMediaPlayer(){
@@ -135,5 +151,6 @@ public class Player {
     private void setRepeat(boolean repeat){
         this.repeat = repeat;
     }
+
 
 }
