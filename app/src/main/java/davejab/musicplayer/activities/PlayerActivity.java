@@ -36,9 +36,9 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
 //    private MediaPlayer mp;
 //    private List<Song> songsList;
     // Handler to update UI timer, progress bar etc,.
-    private Handler progressHandler = new Handler();
+    private Handler progressHandler;// = new Handler();
     //private SongsManager songManager;
-    //private Time time;
+    private Time time;
     private int seekForwardTime = 5000; // 5000 milliseconds
     private int seekBackwardTime = 5000; // 5000 milliseconds
     //private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
@@ -64,8 +64,10 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
 
         songProgressBar.setOnSeekBarChangeListener(this);
 
-        setPlayer(Player.getPlayer());
-        getPlayer().setOnCompletionListener(this);
+        setTime(new Time());
+        setProgressHandler(new Handler());
+
+        setPlayer(Player.getPlayer(this));
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("songIndex", 0);
@@ -73,7 +75,6 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
         getPlayer().setPlaylist(Library.getLibrary(getContentResolver()).getCurrentList());
         getPlayer().setCurrentSongIndex(position);
         playSong(getPlayer().getCurrentSong());
-
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,19 +93,12 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
 
             @Override
             public void onClick(View arg0) {
-//                if (isRepeat) {
-//                    isRepeat = false;
-//                    Toast.makeText(getApplicationContext(), "Repeat is OFF", Toast.LENGTH_SHORT).show();
-//                    btnRepeat.setImageResource(R.drawable.btn_repeat);
-//                } else {
-//                    // make repeat to true
-//                    isRepeat = true;
-//                    Toast.makeText(getApplicationContext(), "Repeat is ON", Toast.LENGTH_SHORT).show();
-//                    // make shuffle to false
-//                    isShuffle = false;
-//                    //    btnRepeat.setImageResource(R.drawable.btn_repeat_focused);
-//                    btnShuffle.setImageResource(R.drawable.btn_shuffle);
-//                }
+                if (getPlayer().toggleRepeat()){
+                    //btnRepeat.setImageResource(R.drawable.btn_repeat_focused);
+                    btnShuffle.setImageResource(R.drawable.btn_shuffle);
+                } else {
+                    btnRepeat.setImageResource(R.drawable.btn_repeat);
+                }
             }
         });
 
@@ -112,101 +106,60 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
 
             @Override
             public void onClick(View arg0) {
-//                if (isShuffle) {
-//                    isShuffle = false;
-//                    Toast.makeText(getApplicationContext(), "Shuffle is OFF", Toast.LENGTH_SHORT).show();
-//                    btnShuffle.setImageResource(R.drawable.btn_shuffle);
-//                } else {
-//                    // make repeat to true
-//                    isShuffle = true;
-//                    Toast.makeText(getApplicationContext(), "Shuffle is ON", Toast.LENGTH_SHORT).show();
-//                    // make shuffle to false
-//                    isRepeat = false;
-//                    //    btnShuffle.setImageResource(R.drawable.btn_shuffle_focused);
-//                    btnRepeat.setImageResource(R.drawable.btn_repeat);
-//                }
+                if (getPlayer().toggleShuffle()){
+                    //    btnShuffle.setImageResource(R.drawable.btn_shuffle_focused);
+                    btnRepeat.setImageResource(R.drawable.btn_repeat);
+                } else {
+                    btnShuffle.setImageResource(R.drawable.btn_shuffle);
+                }
             }
         });
     }
 
     public void playSong(Song song) {
-        // Play song
         try {
-
             getPlayer().playSong(song);
             songProgressBar.setProgress(0);
-            songProgressBar.setMax(100);//////////
-
-            // Updating progress ba/r
+            songProgressBar.setMax(100);
             updateProgressBar();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-//        } catch (IllegalStateException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
         }
     }
 
-
     public void updateProgressBar() {
-        progressHandler.postDelayed(mUpdateTimeTask, 100);
+        getProgressHandler().postDelayed(progressUpdater, 100);
     }
 
-    /**
-     * Background Runnable thread
-     */
-    private Runnable mUpdateTimeTask = new Runnable() {
+    private Runnable progressUpdater = new Runnable() {
         public void run() {
-//                long totalDuration = getPlayer().getCurrentSong().getDuration();
-//               long currentDuration = mp.getCurrentPosition();
-//
-//            // Displaying Total Duration time
-//               songTotalDurationLabel.setText(time.milliSecondsToTimer(totalDuration));
-//            //   // Displaying time completed playing
-//              songCurrentDurationLabel.setText(time.milliSecondsToTimer(currentDuration));
-//
-//            // Updating progress bar
-//            int progress = time.getProgressPercentage(currentDuration, totalDuration);
-//            ///Log.d("Progress", ""+progress);
-//            songProgressBar.setProgress(progress);
-//
-//            // Running this thread after 100 milliseconds
-//            progressHandler.postDelayed(this, 100);
+            long totalDuration = getPlayer().getCurrentSong().getDuration();
+            long currentDuration = getPlayer().getCurrentPosition();
+            songTotalDurationLabel.setText(getTime().milliSecondsToTimer(totalDuration));
+            songCurrentDurationLabel.setText(getTime().milliSecondsToTimer(currentDuration));
+            int progress = getTime().getProgressPercentage(currentDuration, totalDuration);
+            songProgressBar.setProgress(progress);
+            getProgressHandler().postDelayed(this, 100);
         }
     };
 
-    /**
-     *
-     * */
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
 
     }
 
-    /**
-     * When user starts moving the progress handler
-     */
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        // remove message Handler from updating progress bar
-        progressHandler.removeCallbacks(mUpdateTimeTask);
+        getProgressHandler().removeCallbacks(progressUpdater);
     }
 
-    /**
-     * When user stops moving the progress hanlder
-     */
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-//        progressHandler.removeCallbacks(mUpdateTimeTask);
-//        int totalDuration = mp.getDuration();
-//        int currentPosition = time.progressToTimer(seekBar.getProgress(), totalDuration);
-//
-//        // forward or backward to certain seconds
-//        mp.seekTo(currentPosition);
-//
-//        // update timer progress again
-//        updateProgressBar();
+        getProgressHandler().removeCallbacks(progressUpdater);
+        int totalDuration = (int) getPlayer().getCurrentSong().getDuration();
+        int currentPosition = time.progressToTimer(seekBar.getProgress(), totalDuration);
+        getPlayer().seek(currentPosition);
+        updateProgressBar();
     }
 
     @Override
@@ -214,11 +167,23 @@ public class PlayerActivity extends Activity implements MediaPlayer.OnCompletion
 
     }
 
+    private Handler getProgressHandler(){
+        return this.progressHandler;
+    }
     private Player getPlayer(){
         return this.player;
     }
+    private Time getTime(){
+        return this.time;
+    }
     private void setPlayer(Player player){
         this.player = player;
+    }
+    private void setProgressHandler(Handler progressHandler){
+        this.progressHandler = progressHandler;
+    }
+    private void setTime(Time time){
+        this.time = time;
     }
 }
 

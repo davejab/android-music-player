@@ -7,14 +7,12 @@ import java.util.List;
 
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
-import davejab.musicplayer.util.Time;
 
 public class Player {
 
     private static Player PLAYER = null;
 
     private MediaPlayer mediaPlayer;
-    private Time time;
 
     private List<Item> playlist;
     private int currentSongIndex;
@@ -22,22 +20,18 @@ public class Player {
     private boolean shuffle = false;
     private boolean repeat = false;
 
-    private Player(){
+    private Player(MediaPlayer.OnCompletionListener onCompletionListener){
         setMediaPlayer(new MediaPlayer());
-        setTime(new Time());
+        getMediaPlayer().setOnCompletionListener(onCompletionListener);
         setShuffle(false);
         setRepeat(false);
     }
 
-    public static Player getPlayer() {
+    public static Player getPlayer(MediaPlayer.OnCompletionListener onCompletionListener) {
         if (PLAYER == null){
-            PLAYER = new Player();
+            PLAYER = new Player(onCompletionListener);
         }
         return PLAYER;
-    }
-
-    public void setOnCompletionListener(MediaPlayer.OnCompletionListener onCompletionListener){
-        getMediaPlayer().setOnCompletionListener(onCompletionListener);
     }
 
     public Song getCurrentSong(){
@@ -79,15 +73,40 @@ public class Player {
         playSong(getCurrentSong());
     }
 
+    public boolean toggleShuffle(){
+        if (getShuffle()) {
+            setShuffle(false);
+        } else {
+            setRepeat(true);
+ //           setShuffle(false);
+        }
+        return getShuffle();
+    }
+
+    public boolean toggleRepeat(){
+        if (getRepeat()) {
+            setRepeat(false);
+        } else {
+            setRepeat(true);
+  //          setShuffle(false);
+        }
+        return getRepeat();
+    }
+
+    public long getCurrentPosition(){
+        return getMediaPlayer().getCurrentPosition();
+    }
+
+    public void seek(int position){
+        getMediaPlayer().seekTo(position);
+    }
+
     private int getSongCount(){
         return getPlaylist().size();
     }
 
     private MediaPlayer getMediaPlayer(){
         return this.mediaPlayer;
-    }
-    private Time getTime(){
-        return this.time;
     }
     private List<Item> getPlaylist(){
         return this.playlist;
@@ -103,9 +122,6 @@ public class Player {
     }
     private void setMediaPlayer(MediaPlayer mediaPlayer){
         this.mediaPlayer = mediaPlayer;
-    }
-    private void setTime(Time time){
-        this.time = time;
     }
     public void setPlaylist(List<Item> playlist){
         this.playlist = playlist;
