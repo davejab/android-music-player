@@ -111,6 +111,19 @@ public class Player implements MediaPlayer.OnCompletionListener {
         return getRepeat();
     }
 
+    public boolean togglePause(){
+        if(getMediaPlayer().isPlaying()){
+            if(getMediaPlayer() != null){
+                getMediaPlayer().pause();
+            }
+        }else{
+            if(getMediaPlayer() != null){
+                getMediaPlayer().start();
+            }
+        }
+        return getMediaPlayer().isPlaying();
+    }
+
     public void seek(int position){
         getMediaPlayer().seekTo(position);
     }

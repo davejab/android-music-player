@@ -32,17 +32,10 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
     private TextView songTitleLabel;
     private TextView songCurrentDurationLabel;
     private TextView songTotalDurationLabel;
-    // Media Player
-//    private MediaPlayer mp;
-//    private List<Song> songsList;
-    // Handler to update UI timer, progress bar etc,.
-    private Handler progressHandler;// = new Handler();
-    //private SongsManager songManager;
+    private Handler progressHandler;
     private Time time;
     private int seekForwardTime = 5000; // 5000 milliseconds
     private int seekBackwardTime = 5000; // 5000 milliseconds
-    //private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
-
 
     private Player player;
 
@@ -52,13 +45,13 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
         setContentView(R.layout.activity_player);
 
         // All player buttons
-        btnPlay = (ImageButton) findViewById(R.id.btnPlay);
-        btnNext = (ImageButton) findViewById(R.id.btnNext);
-        btnPrevious = (ImageButton) findViewById(R.id.btnPrevious);
-        btnRepeat = (ImageButton) findViewById(R.id.btnRepeat);
-        btnShuffle = (ImageButton) findViewById(R.id.btnShuffle);
+        btnPlay = findViewById(R.id.btnPlay);
+        btnNext = findViewById(R.id.btnNext);
+        btnPrevious = findViewById(R.id.btnPrevious);
+        btnRepeat = findViewById(R.id.btnRepeat);
+        btnShuffle = findViewById(R.id.btnShuffle);
         songProgressBar = (SeekBar) findViewById(R.id.songProgressBar);
-        //songTitleLabel = (TextView) findViewById(R.id.songTitle);
+        songTitleLabel = (TextView) findViewById(R.id.txt_title);
         songCurrentDurationLabel = (TextView) findViewById(R.id.songCurrentDurationLabel);
         songTotalDurationLabel = (TextView) findViewById(R.id.songTotalDurationLabel);
 
@@ -68,7 +61,6 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
         setProgressHandler(new Handler());
 
         setPlayer(Player.getPlayer());
-
         Intent intent = getIntent();
         int position = intent.getIntExtra("songIndex", 0);
 
@@ -76,16 +68,29 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
         getPlayer().setCurrentSongIndex(position);
         playSong(getPlayer().getCurrentSong());
 
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (getPlayer().togglePause()){
+                    // TODO
+                } else {
+                    // TODO
+                }
+            }
+        });
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 getPlayer().next();
+                setSongView(getPlayer().getCurrentSong());
             }
         });
         btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 getPlayer().previous();
+                setSongView(getPlayer().getCurrentSong());
             }
         });
 
@@ -119,9 +124,7 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
     public void playSong(Song song) {
         try {
             getPlayer().playSong(song);
-            songProgressBar.setProgress(0);
-            songProgressBar.setMax(100);
-            updateProgressBar();
+            setSongView(song);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,6 +162,13 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
         int totalDuration = (int) getPlayer().getCurrentSong().getDuration();
         int currentPosition = time.progressToTimer(seekBar.getProgress(), totalDuration);
         getPlayer().seek(currentPosition);
+        updateProgressBar();
+    }
+
+    private void setSongView(Song song){
+        songProgressBar.setProgress(0);
+        songProgressBar.setMax(100);
+        songTitleLabel.setText(song.getTitle());
         updateProgressBar();
     }
 
