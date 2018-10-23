@@ -3,7 +3,7 @@ package davejab.musicplayer.models;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.MediaStore.Audio.Albums;
+import android.provider.MediaStore.Audio.Artists.Albums;
 
 public class Album extends Artist{
 
@@ -13,18 +13,16 @@ public class Album extends Artist{
 
     public Album(ContentResolver contentResolver) {
         super(contentResolver);
-        setOrder(Albums.DEFAULT_SORT_ORDER);
     }
 
     @Override
     public Uri getExternalUri() {
-        return Albums.EXTERNAL_CONTENT_URI;
+        return Albums.getContentUri("external", getId());
     }
 
     @Override
     public String[] getProjection() {
         return new String[] {
-                Albums._ID,
                 Albums.ALBUM,
                 Albums.ALBUM_KEY,
                 Albums.ALBUM_ART,
@@ -36,18 +34,17 @@ public class Album extends Artist{
     public void setItemSelection(Item item) {
         if (item instanceof Artist) {
             Artist artist = (Artist) item;
-            setSelection(Albums.ARTIST+" = '"+artist.getArtist()+"'");
+            setId(artist.getId());
         }
     }
 
     @Override
     public Album cursorToItem(Cursor cursor) {
         Album album = new Album(getContentResolver());
-        album.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
-        album.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
-        album.setAlbumKey(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
-        album.setAlbumArt(cursor.getString(cursor.getColumnIndex(getProjection()[3])));
-        album.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[4])));
+        album.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[0])));
+        album.setAlbumKey(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
+        album.setAlbumArt(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
+        album.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[3])));
         return album;
     }
 
