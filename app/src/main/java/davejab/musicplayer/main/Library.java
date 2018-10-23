@@ -49,8 +49,10 @@ public class Library {
     }
 
     public List<Item> getLastList() {
-        List<Item> list = getHistory().pop();
-        setCurrentList(list);
+        if (!getHistory().empty()){
+            List<Item> list = getHistory().pop();
+            setCurrentList(list);
+        }
         return getCurrentList();
     }
 
