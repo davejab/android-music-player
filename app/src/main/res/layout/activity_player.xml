@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/dark_background">
 
 
     <include
@@ -15,9 +16,9 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:gravity="center">
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_nocover"/>
+        <ImageView android:id="@+id/songAlbumArt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <!-- Player Footer -->
@@ -108,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
-            android:textColor="#eeeeee"
+            android:textColor="@color/dark_text_secondary"
             android:textStyle="bold"/>
         <!-- Total Duration Label -->
         <TextView
@@ -117,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:textColor="#04cbde"
+            android:textColor="@color/dark_highlight"
             android:textStyle="bold"/>
     </LinearLayout>
 

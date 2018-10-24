@@ -4,21 +4,33 @@
     android:layout_height="?android:attr/actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/dark_app_bar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"><RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:text="Title"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
-</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/txt_song_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_text_primary"
+            android:textSize="16sp"
+            android:text="Song Title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Artist"
+            android:textColor="@color/dark_text_secondary"/>
+
+
+    </LinearLayout>
+
 </android.support.v7.widget.Toolbar>

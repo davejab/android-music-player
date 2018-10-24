@@ -7,11 +7,13 @@ import davejab.musicplayer.R;
 import davejab.musicplayer.main.Library;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class LibraryActivity extends FragmentActivity {
 
     private static String[] PERMISSIONS = {
-            READ_EXTERNAL_STORAGE
+            READ_EXTERNAL_STORAGE,
+            WRITE_EXTERNAL_STORAGE
     };
 
     @Override

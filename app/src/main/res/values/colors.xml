@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- TODO: delete? -->
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!--<color name="colorPrimary">#008577</color>-->
+    <!--<color name="colorPrimaryDark">#00574B</color>-->
+    <!--<color name="colorAccent">#D81B60</color>-->
 
 
     <color name="dark_app_bar">#212121</color>
     <color name="dark_background">#303030</color>
     <color name="dark_dialog">#424242</color>
+    <color name="dark_highlight">#D81B60</color>
+
+    <color name="dark_text_primary">#FFFFFF</color>
+    <color name="dark_text_secondary">#80FFFFFF</color>
+    <color name="dark_text_hint">#50FFFFFF</color>
 
 </resources>

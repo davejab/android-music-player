@@ -2,18 +2,15 @@ package davejab.musicplayer.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Random;
 
 import davejab.musicplayer.R;
 import davejab.musicplayer.main.Library;
@@ -28,14 +25,14 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
     private ImageButton btnPrevious;
     private ImageButton btnRepeat;
     private ImageButton btnShuffle;
+    private ImageView imgAlbumArt;
     private SeekBar songProgressBar;
     private TextView songTitleLabel;
+    private TextView songArtistLabel;
     private TextView songCurrentDurationLabel;
     private TextView songTotalDurationLabel;
     private Handler progressHandler;
     private Time time;
-    private int seekForwardTime = 5000; // 5000 milliseconds
-    private int seekBackwardTime = 5000; // 5000 milliseconds
 
     private Player player;
 
@@ -50,10 +47,12 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
         btnPrevious = findViewById(R.id.btnPrevious);
         btnRepeat = findViewById(R.id.btnRepeat);
         btnShuffle = findViewById(R.id.btnShuffle);
-        songProgressBar = (SeekBar) findViewById(R.id.songProgressBar);
-        songTitleLabel = (TextView) findViewById(R.id.txt_title);
-        songCurrentDurationLabel = (TextView) findViewById(R.id.songCurrentDurationLabel);
-        songTotalDurationLabel = (TextView) findViewById(R.id.songTotalDurationLabel);
+        imgAlbumArt = findViewById(R.id.songAlbumArt);
+        songProgressBar = findViewById(R.id.songProgressBar);
+        songTitleLabel = findViewById(R.id.txt_song_title);
+        songArtistLabel = findViewById(R.id.txt_artist);
+        songCurrentDurationLabel = findViewById(R.id.songCurrentDurationLabel);
+        songTotalDurationLabel = findViewById(R.id.songTotalDurationLabel);
 
         songProgressBar.setOnSeekBarChangeListener(this);
 
@@ -169,6 +168,9 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
         songProgressBar.setProgress(0);
         songProgressBar.setMax(100);
         songTitleLabel.setText(song.getTitle());
+        songArtistLabel.setText(song.getArtist());
+        //Log.d("DABRA", song.getAlbumArt()+"");
+        imgAlbumArt.setImageURI(Uri.parse(song.getAlbumArt()));
         updateProgressBar();
     }
 

@@ -29,7 +29,7 @@ public class Song extends Album{
                 Media.TITLE,
                 Media.DURATION,
                 Media.ALBUM,
-                Media.ARTIST
+                Media.ARTIST,
         };
     }
 
@@ -39,6 +39,8 @@ public class Song extends Album{
             Album album = (Album) item;
             setSelection(Media.ALBUM+" = '"+album.getAlbum()+"'");
             setOrder(Media.TRACK+" ASC");
+            // TODO ditch this
+            setAlbumArt(album.getAlbumArt());
         } else if (item instanceof Artist) {
             Artist artist = (Artist) item;
             setSelection(Media.ARTIST+" = '"+artist.getArtist()+"'");
@@ -54,6 +56,8 @@ public class Song extends Album{
         song.setDuration(cursor.getLong(cursor.getColumnIndex(getProjection()[3])));
         song.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[4])));
         song.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[5])));
+        // TODO fix this
+        song.setAlbumArt(getAlbumArt());
         return song;
     }
 
