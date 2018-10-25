@@ -25,27 +25,32 @@ public class Album extends Artist{
         return new String[] {
                 Albums.ALBUM,
                 Albums.ALBUM_KEY,
-                Albums.ALBUM_ART,
-                Albums.ARTIST
+                Albums.ALBUM_ART
         };
     }
 
     @Override
     public void setItemSelection(Item item) {
         if (item instanceof Artist) {
-            Artist artist = (Artist) item;
-            setId(artist.getId());
+            mergeArtist((Artist) item);
         }
     }
 
     @Override
     public Album cursorToItem(Cursor cursor) {
         Album album = new Album(getContentResolver());
+        album.mergeArtist(this);
         album.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[0])));
         album.setAlbumKey(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
         album.setAlbumArt(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
-        album.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[3])));
         return album;
+    }
+
+    protected void mergeAlbum(Album album) {
+        mergeArtist(album);
+        setAlbum(album.getAlbum());
+        setAlbumArt(album.getAlbumArt());
+        setAlbumKey(album.getAlbumKey());
     }
 
     public String getAlbum(){
@@ -66,4 +71,5 @@ public class Album extends Artist{
     public void setAlbumKey(String albumKey){
         this.albumKey = albumKey;
     }
+
 }

@@ -39,6 +39,10 @@ public abstract class Item implements MediaManager.Query {
         return cursorToList(cursor);
     }
 
+    protected void mergeItem(Item item){
+        setId(item.getId());
+    }
+
     public long getId(){
         return this.id;
     }

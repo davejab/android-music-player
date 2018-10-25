@@ -29,7 +29,7 @@ public class Artist extends Item{
 
     @Override
     public void setItemSelection(Item item) {
-
+        mergeItem(item);
     }
 
     @Override
@@ -40,12 +40,16 @@ public class Artist extends Item{
         return artist;
     }
 
+    protected void mergeArtist(Artist artist) {
+        mergeItem(artist);
+        setArtist(artist.getArtist());
+    }
+
     public String getArtist(){
         return this.artist;
     }
     public void setArtist(String artist){
         this.artist = artist;
     }
-
 
 }

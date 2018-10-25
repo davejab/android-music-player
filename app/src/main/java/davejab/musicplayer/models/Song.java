@@ -28,8 +28,6 @@ public class Song extends Album{
                 Media.DATA,
                 Media.TITLE,
                 Media.DURATION,
-                Media.ALBUM,
-                Media.ARTIST,
         };
     }
 
@@ -37,12 +35,12 @@ public class Song extends Album{
     public void setItemSelection(Item item) {
         if (item instanceof Album){
             Album album = (Album) item;
-            setSelection(Media.ALBUM+" = '"+album.getAlbum()+"'");
+            mergeAlbum(album);
+            setSelection(Media.ALBUM_KEY+" = '"+album.getAlbumKey()+"'");
             setOrder(Media.TRACK+" ASC");
-            // TODO ditch this
-            setAlbumArt(album.getAlbumArt());
         } else if (item instanceof Artist) {
             Artist artist = (Artist) item;
+            mergeArtist(artist);
             setSelection(Media.ARTIST+" = '"+artist.getArtist()+"'");
         }
     }
@@ -50,14 +48,11 @@ public class Song extends Album{
     @Override
     public Song cursorToItem(Cursor cursor) {
         Song song = new Song(getContentResolver());
+        song.mergeAlbum(this);
         song.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
         song.setData(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
         song.setTitle(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
         song.setDuration(cursor.getLong(cursor.getColumnIndex(getProjection()[3])));
-        song.setAlbum(cursor.getString(cursor.getColumnIndex(getProjection()[4])));
-        song.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[5])));
-        // TODO fix this
-        song.setAlbumArt(getAlbumArt());
         return song;
     }
 
@@ -79,4 +74,5 @@ public class Song extends Album{
     public void setDuration(long duration){
         this.duration = duration;
     }
+
 }
