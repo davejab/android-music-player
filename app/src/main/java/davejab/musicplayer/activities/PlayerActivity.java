@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -71,9 +70,10 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
             @Override
             public void onClick(View arg0) {
                 if (getPlayer().togglePause()){
-                    // TODO
+                    btnPlay.setImageResource(R.drawable.btn_pause);
+
                 } else {
-                    // TODO
+                    btnPlay.setImageResource(R.drawable.btn_play);
                 }
             }
         });
@@ -85,6 +85,7 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
                 setSongView(getPlayer().getCurrentSong());
             }
         });
+
         btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -98,8 +99,7 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
             @Override
             public void onClick(View arg0) {
                 if (getPlayer().toggleRepeat()){
-                    //btnRepeat.setImageResource(R.drawable.btn_repeat_focused);
-                    btnShuffle.setImageResource(R.drawable.btn_shuffle);
+                    btnRepeat.setImageResource(R.drawable.btn_repeat_toggled);
                 } else {
                     btnRepeat.setImageResource(R.drawable.btn_repeat);
                 }
@@ -111,8 +111,7 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
             @Override
             public void onClick(View arg0) {
                 if (getPlayer().toggleShuffle()){
-                    //    btnShuffle.setImageResource(R.drawable.btn_shuffle_focused);
-                    btnRepeat.setImageResource(R.drawable.btn_repeat);
+                    btnShuffle.setImageResource(R.drawable.btn_shuffle_toggled);
                 } else {
                     btnShuffle.setImageResource(R.drawable.btn_shuffle);
                 }
@@ -169,7 +168,7 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
         songProgressBar.setMax(100);
         songTitleLabel.setText(song.getTitle());
         songArtistLabel.setText(song.getArtist());
-        //Log.d("DABRA", song.getAlbumArt()+"");
+        btnPlay.setImageResource(R.drawable.btn_pause);
         imgAlbumArt.setImageURI(Uri.parse(song.getAlbumArt()));
         updateProgressBar();
     }
