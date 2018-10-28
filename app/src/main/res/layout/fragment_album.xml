@@ -5,11 +5,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@android:id/list"
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/dark_background">
-    </ListView>
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:gravity="center"
+        />
+
+    <!--<ListView-->
+        <!--android:id="@android:id/list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/dark_background">-->
+    <!--</ListView>-->
 
 </LinearLayout>

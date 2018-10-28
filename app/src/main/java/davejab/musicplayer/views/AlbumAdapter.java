@@ -1,9 +1,11 @@
 package davejab.musicplayer.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,11 +31,13 @@ public class AlbumAdapter extends ItemAdapter implements View.OnClickListener{
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(getResource(), parent, false);
             viewHolder.txtAlbum = convertView.findViewById(R.id.album);
+            viewHolder.imgAlbum = convertView.findViewById(R.id.albumArt);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.txtAlbum.setText(album.getAlbum());
+        viewHolder.imgAlbum.setImageURI(Uri.parse(album.getAlbumArt()));
         return convertView;
     }
 
@@ -44,6 +48,7 @@ public class AlbumAdapter extends ItemAdapter implements View.OnClickListener{
 
     private static class ViewHolder {
         TextView txtAlbum;
+        ImageView imgAlbum;
     }
 
 }

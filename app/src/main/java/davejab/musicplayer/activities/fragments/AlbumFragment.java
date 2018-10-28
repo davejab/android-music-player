@@ -1,11 +1,13 @@
 package davejab.musicplayer.activities.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.navigation.Navigation;
@@ -13,7 +15,9 @@ import davejab.musicplayer.R;
 import davejab.musicplayer.main.Library;
 import davejab.musicplayer.views.AlbumAdapter;
 
-public class AlbumFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class AlbumFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    private GridView gridview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,8 +29,9 @@ public class AlbumFragment extends ListFragment implements AdapterView.OnItemCli
     public void onStart() {
         super.onStart();
         AlbumAdapter adapter = new AlbumAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
-        setListAdapter(adapter);
-        getListView().setOnItemClickListener(this);
+        gridview = getView().findViewById(R.id.gridview);
+        gridview.setAdapter(adapter);
+        gridview.setOnItemClickListener(this);
     }
 
     @Override
