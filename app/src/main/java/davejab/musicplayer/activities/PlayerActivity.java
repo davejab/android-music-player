@@ -99,9 +99,9 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
             @Override
             public void onClick(View arg0) {
                 if (getPlayer().toggleRepeat()){
-                    btnRepeat.setImageResource(R.drawable.btn_repeat_toggled);
+                    btnRepeat.setImageResource(R.drawable.img_repeat_white_24);
                 } else {
-                    btnRepeat.setImageResource(R.drawable.btn_repeat);
+                    btnRepeat.setImageResource(R.drawable.img_repeat_pressed);
                 }
             }
         });
@@ -111,9 +111,9 @@ public class PlayerActivity extends Activity implements SeekBar.OnSeekBarChangeL
             @Override
             public void onClick(View arg0) {
                 if (getPlayer().toggleShuffle()){
-                    btnShuffle.setImageResource(R.drawable.btn_shuffle_toggled);
+                    btnShuffle.setImageResource(R.drawable.img_shuffle_white_24);
                 } else {
-                    btnShuffle.setImageResource(R.drawable.btn_shuffle);
+                    btnShuffle.setImageResource(R.drawable.img_shuffle_pressed);
                 }
             }
         });

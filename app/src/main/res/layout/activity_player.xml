@@ -43,7 +43,7 @@
                 android:id="@+id/btnRepeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/btn_repeat"
+                android:src="@drawable/img_repeat_pressed"
                 android:layout_marginRight="5dp"
                 android:background="@null"/>
             <!-- Previous Button -->
@@ -73,7 +73,7 @@
                 android:id="@+id/btnShuffle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/btn_shuffle"
+                android:src="@drawable/img_shuffle_white_24"
                 android:layout_marginLeft="5dp"
                 android:background="@null"/>
         </LinearLayout>

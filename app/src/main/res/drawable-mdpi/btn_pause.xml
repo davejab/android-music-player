@@ -12,7 +12,4 @@
         android:state_focused="false"
         android:state_pressed="false" >
     </item>
-
-
-
 </selector>
