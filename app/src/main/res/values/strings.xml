@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Music Player</string>
+
+    <!-- player content descriptions -->
+    <string name="player_album_art">Album Art</string>
+    <string name="player_repeat">Repeat</string>
+    <string name="player_previous">Previous</string>
+    <string name="player_play">Play</string>
+    <string name="player_next">Next</string>
+    <string name="player_shuffle">Shuffle</string>
 </resources>
