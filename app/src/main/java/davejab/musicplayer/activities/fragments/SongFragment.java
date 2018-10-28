@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import davejab.musicplayer.R;
 import davejab.musicplayer.activities.PlayerActivity;
 import davejab.musicplayer.main.Library;
+import davejab.musicplayer.models.Album;
 import davejab.musicplayer.views.SongAdapter;
 
 public class SongFragment extends ListFragment implements AdapterView.OnItemClickListener {
@@ -24,7 +26,12 @@ public class SongFragment extends ListFragment implements AdapterView.OnItemClic
     @Override
     public void onStart() {
         super.onStart();
-        SongAdapter adapter = new SongAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
+        Library lib = Library.getLibrary(getActivity().getContentResolver());
+        SongAdapter adapter = new SongAdapter(getActivity(), lib.getCurrentList());
+
+        TextView txtTitle = getActivity().findViewById(R.id.txt_title);
+        txtTitle.setText(((Album) lib.getCurrentItem()).getAlbum());
+
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
     }

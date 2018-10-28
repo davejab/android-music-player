@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import androidx.navigation.Navigation;
 import davejab.musicplayer.R;
@@ -23,7 +24,12 @@ public class ArtistFragment extends ListFragment implements AdapterView.OnItemCl
     @Override
     public void onStart() {
         super.onStart();
-        ArtistAdapter adapter = new ArtistAdapter(getActivity(), Library.getLibrary(getActivity().getContentResolver()).getCurrentList());
+        Library lib = Library.getLibrary(getActivity().getContentResolver());
+        ArtistAdapter adapter = new ArtistAdapter(getActivity(), lib.getCurrentList());
+
+        TextView txtTitle = getActivity().findViewById(R.id.txt_title);
+        txtTitle.setText("Artists");
+
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
     }

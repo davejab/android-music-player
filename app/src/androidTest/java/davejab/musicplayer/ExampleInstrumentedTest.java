@@ -18,6 +18,8 @@ import davejab.musicplayer.models.util.MediaManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.net.URI;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -35,6 +37,9 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("davejab.musicplayer", appContext.getPackageName());
 
+
+
+        //File file = new File(Uri.parse("/storage/emulated/0/Android/data/com.android.providers.media/albumart"));
 
 
 
@@ -61,14 +66,17 @@ public class ExampleInstrumentedTest {
         Log.d("DABRA", uri.toString()+"");
         Log.d("DABRA", MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI.toString()+"");
         Cursor cursor = appContext.getContentResolver().query(
-                MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                //MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,/
+                //MediaStore.Audio.Artists.Albums.getContentUri("external", aid),
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 null,
                 null,
                 null,
                 null);
 
         while(cursor.moveToNext()) {
-            Log.d("DABRA", cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART))+"");
+            Log.d("DABRA", cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))+"");
+            //Log.d("DABRA", cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Artists.Albums.ALBUM_ART))+"");
         }
 
 
