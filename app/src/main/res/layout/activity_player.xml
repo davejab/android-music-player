@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relativeLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_background">
@@ -18,43 +19,56 @@
         android:id="@+id/songAlbumArt"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:contentDescription="@string/player_album_art"
-        app:layout_constraintBottom_toTopOf="@+id/songProgressBar"
+        app:layout_constraintBottom_toTopOf="@+id/player_footer_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
-    <SeekBar
-        android:id="@+id/songProgressBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:progressDrawable="@drawable/seekbar_progress"
-        android:thumb="@drawable/img_seekbar_handler"
-        app:layout_constraintBottom_toTopOf="@+id/player_footer_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/player_footer_bg"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="114dp"
         android:background="@color/dark_app_bar"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <SeekBar
+            android:id="@+id/songProgressBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:progressDrawable="@drawable/seekbar_progress"
+            android:thumb="@drawable/img_seekbar_handler"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="32dp"
+            tools:layout_conversion_absoluteWidth="1dp" />
+
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@layout/rounded_corner"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_conversion_absoluteHeight="50dp"
+            tools:layout_conversion_absoluteWidth="222dp">
 
             <ImageButton
                 android:id="@+id/btnRepeat"
@@ -97,9 +111,10 @@
                 android:background="@null"
                 android:contentDescription="@string/player_shuffle"
                 android:src="@drawable/img_shuffle_pressed" />
+
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/songTotalDurationLabel"
@@ -107,9 +122,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="end"
         android:textColor="@color/dark_highlight"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/player_footer_bg"
         app:layout_constraintTop_toTopOf="@+id/player_footer_bg" />
 
@@ -119,9 +136,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="start"
         android:textColor="@color/dark_text_secondary"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_footer_bg" />
 
