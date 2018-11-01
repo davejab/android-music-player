@@ -39,11 +39,11 @@ public class Time {
     public int getProgressPercentage(long currentDuration, long totalDuration){
         Double percentage = (double) 0;
 
-        long currentSeconds = (int) (currentDuration / 1000);
-        long totalSeconds = (int) (totalDuration / 1000);
+        double currentSeconds = (double) (currentDuration / 1000);
+        double totalSeconds = (double) (totalDuration / 1000);
 
         // calculating percentage
-        percentage =(((double)currentSeconds)/totalSeconds)*100;
+        percentage =(currentSeconds/totalSeconds)*100;
 
         // return percentage
         return percentage.intValue();
