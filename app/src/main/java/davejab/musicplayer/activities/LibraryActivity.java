@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import davejab.musicplayer.R;
+import davejab.musicplayer.activities.fragments.ArtistFragment;
 import davejab.musicplayer.main.Library;
+import davejab.musicplayer.models.Artist;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -24,12 +26,15 @@ public class LibraryActivity extends FragmentActivity {
         // TODO Move this elsewhere
         // Get required permissions
         requestPermissions(PERMISSIONS, 0);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_host, ArtistFragment.getArtistFragment(Library.getLibrary(getContentResolver()).getCurrentList()))
+                // Add this transaction to the back stack
+                .addToBackStack(null)
+                .commit();
+
+
     }
 
-    @Override
-    public void onBackPressed() {
-        Library.getLibrary(getContentResolver()).getLastList();
-        super.onBackPressed();
-    }
 
 }

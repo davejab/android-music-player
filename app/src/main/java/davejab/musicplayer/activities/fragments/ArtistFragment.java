@@ -1,19 +1,26 @@
 package davejab.musicplayer.activities.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.TextView;
 
-import androidx.navigation.Navigation;
+import java.util.List;
+
 import davejab.musicplayer.R;
-import davejab.musicplayer.main.Library;
-import davejab.musicplayer.views.ArtistAdapter;
+import davejab.musicplayer.adapters.ArtistAdapter;
+import davejab.musicplayer.models.Item;
 
-public class ArtistFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class ArtistFragment extends ItemFragment {
+
+    public static Fragment getArtistFragment(List<Item> items){
+        ArtistFragment fragment = new ArtistFragment();
+        fragment.setItems(items);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -22,23 +29,13 @@ public class ArtistFragment extends ListFragment implements AdapterView.OnItemCl
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Library lib = Library.getLibrary(getActivity().getContentResolver());
-        ArtistAdapter adapter = new ArtistAdapter(getActivity(), lib.getCurrentList());
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        TextView txtTitle = getActivity().findViewById(R.id.txt_title);
-        txtTitle.setText("Artists");
+        setRecyclerView((RecyclerView) view.findViewById(R.id.recyclerView));
 
-        setListAdapter(adapter);
-        getListView().setOnItemClickListener(this);
+        ArtistAdapter adapter = new ArtistAdapter(getContext(), getItems());
+        getRecyclerView().setAdapter(adapter);
+        getRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-        Library lib = Library.getLibrary(getActivity().getContentResolver());
-        lib.getNextList(position);
-        Navigation.findNavController(view).navigate(R.id.action_artistFragment_to_albumFragment);
-    }
-
 }

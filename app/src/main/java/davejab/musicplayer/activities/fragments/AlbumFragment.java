@@ -13,13 +13,12 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.navigation.Navigation;
 import davejab.musicplayer.R;
 import davejab.musicplayer.main.Library;
 import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.views.AlbumAdapter;
 
-public class AlbumFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class AlbumFragment extends Fragment {
 
     private GridView gridview;
 
@@ -40,15 +39,8 @@ public class AlbumFragment extends Fragment implements AdapterView.OnItemClickLi
 
         gridview = getView().findViewById(R.id.gridview);
         gridview.setAdapter(adapter);
-        gridview.setOnItemClickListener(this);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-        Library lib = Library.getLibrary(getActivity().getContentResolver());
-        lib.getNextList(position);
-        Navigation.findNavController(view).navigate(R.id.action_albumFragment_to_songFragment);
-    }
 
 
 }
