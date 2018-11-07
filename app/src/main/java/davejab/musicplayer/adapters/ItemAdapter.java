@@ -33,7 +33,7 @@ public abstract class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewH
     protected Context getContext(){
         return this.context;
     }
-    protected List<Item> getItems(){
+    public List<Item> getItems(){
         return this.items;
     }
     protected int getItemLayout(){
@@ -51,9 +51,22 @@ public abstract class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewH
 
     abstract class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        protected Item item;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+        }
+
+        public void bindItem(Item item){
+            setItem(item);
+        }
+
+        protected Item getItem(){
+            return this.item;
+        }
+        protected void setItem(Item item){
+            this.item = item;
         }
 
     }

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Music Player</string>
 
+    <string name="library_artists">Artists</string>
+
     <!-- player content descriptions -->
     <string name="player_album_art">Album Art</string>
     <string name="player_repeat">Repeat</string>

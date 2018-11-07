@@ -1,6 +1,7 @@
 package davejab.musicplayer.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import davejab.musicplayer.R;
+import davejab.musicplayer.activities.PlayerActivity;
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
 
@@ -38,12 +40,16 @@ public class SongAdapter extends ItemAdapter {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtTitle = itemView.findViewById(R.id.artist);
+            txtTitle = itemView.findViewById(R.id.title);
         }
 
         @Override
         public void onClick(View v) {
             // TODO
+            Intent intent = new Intent(getContext(), PlayerActivity.class);
+            intent.putExtra("songIndex", getItems().indexOf(getItem()));
+            //intent.putExtra("songIndex", getItems());
+            getContext().startActivity(intent);
         }
     }
 

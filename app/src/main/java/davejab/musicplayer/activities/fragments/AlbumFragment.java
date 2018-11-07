@@ -2,45 +2,31 @@ package davejab.musicplayer.activities.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.TextClock;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import davejab.musicplayer.R;
-import davejab.musicplayer.main.Library;
-import davejab.musicplayer.models.Artist;
-import davejab.musicplayer.views.AlbumAdapter;
+import java.util.List;
 
-public class AlbumFragment extends Fragment {
+import davejab.musicplayer.adapters.AlbumAdapter;
+import davejab.musicplayer.models.Item;
 
-    private GridView gridview;
+public class AlbumFragment extends ItemFragment {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_album, container, false);
-        return view;
+    private static final int NUM_OF_COLUMNS = 2;
+
+    public static Fragment getAlbumFragment(List<Item> items){
+        AlbumFragment albumFragment = new AlbumFragment();
+        albumFragment.setItems(items);
+        return albumFragment;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Library lib = Library.getLibrary(getActivity().getContentResolver());
-        AlbumAdapter adapter = new AlbumAdapter(getActivity(), lib.getCurrentList());
-
-        TextView txtTitle = getActivity().findViewById(R.id.txt_title);
-        txtTitle.setText(((Artist) lib.getCurrentItem()).getArtist());
-
-        gridview = getView().findViewById(R.id.gridview);
-        gridview.setAdapter(adapter);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        AlbumAdapter adapter = new AlbumAdapter(getContext(), getItems());
+        getRecyclerView().setAdapter(adapter);
+        getRecyclerView().setLayoutManager(new GridLayoutManager(getContext(), NUM_OF_COLUMNS));
+        //getAppBarText().setText(""); // TODO
     }
-
-
 
 }

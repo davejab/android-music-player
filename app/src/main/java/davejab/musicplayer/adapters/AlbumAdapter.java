@@ -11,14 +11,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import davejab.musicplayer.R;
+import davejab.musicplayer.activities.LibraryActivity;
+import davejab.musicplayer.activities.fragments.SongFragment;
 import davejab.musicplayer.models.Album;
+import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.models.Item;
+import davejab.musicplayer.models.Song;
 
 public class AlbumAdapter extends ItemAdapter {
 
     public AlbumAdapter(Context context, List<Item> items) {
         super(context, items);
-        setItemLayout(R.layout.list_item_artist);
+        setItemLayout(R.layout.list_item_album);
     }
 
     @NonNull
@@ -30,9 +34,7 @@ public class AlbumAdapter extends ItemAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder viewHolder, int i) {
-        Album album = (Album) getItems().get(i);
-        ((ViewHolder) viewHolder).txtAlbum.setText(album.getAlbum());
-        ((ViewHolder) viewHolder).imgAlbum.setImageURI(Uri.parse(album.getAlbumArt()));
+        viewHolder.bindItem(getItems().get(i));
     }
 
     private class ViewHolder extends ItemAdapter.ViewHolder implements View.OnClickListener{
@@ -47,8 +49,20 @@ public class AlbumAdapter extends ItemAdapter {
         }
 
         @Override
+        public void bindItem(Item item) {
+            setItem(item);
+            Album album = (Album) item;
+            this.txtAlbum.setText(album.getAlbum());
+            this.imgAlbum.setImageURI(Uri.parse(album.getAlbumArt()));
+        }
+
+        @Override
         public void onClick(View v) {
             // TODO
+            Song songs = new Song(getContext().getContentResolver());
+            songs.setItemSelection(getItem());
+            List<Item> items = songs.toList();
+            ((LibraryActivity) getContext()).switchFragment(SongFragment.getSongFragment(items));
         }
     }
 
