@@ -1,17 +1,21 @@
 package davejab.musicplayer.main;
 
+import android.app.Activity;
 import android.media.MediaPlayer;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import davejab.musicplayer.activities.views.PlayerView;
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
 
 public class Player implements MediaPlayer.OnCompletionListener {
 
-    private static Player PLAYER = null;
+//    private static Player PLAYER = null;
+
+    private PlayerView playerView;
 
     private MediaPlayer mediaPlayer;
 
@@ -21,19 +25,20 @@ public class Player implements MediaPlayer.OnCompletionListener {
     private boolean shuffle = false;
     private boolean repeat = false;
 
-    private Player(){
+    public Player(Activity activity){
         setMediaPlayer(new MediaPlayer());
         getMediaPlayer().setOnCompletionListener(this);
         setShuffle(false);
         setRepeat(false);
+        setPlayerView(new PlayerView(activity, this));
     }
 
-    public static Player getPlayer() {
-        if (PLAYER == null){
-            PLAYER = new Player();
-        }
-        return PLAYER;
-    }
+//    public static Player getPlayer() {
+//        if (PLAYER == null){
+//            PLAYER = new Player();
+//        }
+//        return PLAYER;
+//    }
 
     public Song getCurrentSong(){
         Song currentSong = (Song) getPlaylist().get(getCurrentSongIndex());
@@ -70,6 +75,7 @@ public class Player implements MediaPlayer.OnCompletionListener {
             getMediaPlayer().setDataSource(song.getData());
             getMediaPlayer().prepare();
             getMediaPlayer().start();
+            getPlayerView().setSongView(song);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
@@ -137,6 +143,9 @@ public class Player implements MediaPlayer.OnCompletionListener {
     private MediaPlayer getMediaPlayer(){
         return this.mediaPlayer;
     }
+    private PlayerView getPlayerView(){
+        return this.playerView;
+    }
     private List<Item> getPlaylist(){
         return this.playlist;
     }
@@ -151,6 +160,9 @@ public class Player implements MediaPlayer.OnCompletionListener {
     }
     private void setMediaPlayer(MediaPlayer mediaPlayer){
         this.mediaPlayer = mediaPlayer;
+    }
+    private void setPlayerView(PlayerView playerView){
+        this.playerView = playerView;
     }
     public void setPlaylist(List<Item> playlist){
         this.playlist = playlist;

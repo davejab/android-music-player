@@ -8,7 +8,7 @@ import android.view.View;
 import java.util.List;
 
 import davejab.musicplayer.R;
-import davejab.musicplayer.activities.LibraryActivity;
+import davejab.musicplayer.activities.MainActivity;
 import davejab.musicplayer.adapters.ArtistAdapter;
 import davejab.musicplayer.models.Item;
 
@@ -26,7 +26,7 @@ public class ArtistFragment extends ItemFragment {
         ArtistAdapter adapter = new ArtistAdapter(getContext(), getItems());
         getRecyclerView().setAdapter(adapter);
         getRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
-        ((LibraryActivity) getContext()).setAppBarText(getString(R.string.library_artists));
+        ((MainActivity) getContext()).setAppBarText(getString(R.string.library_artists));
     }
 
 }

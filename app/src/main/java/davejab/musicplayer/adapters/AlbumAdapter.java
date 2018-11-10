@@ -11,10 +11,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import davejab.musicplayer.R;
-import davejab.musicplayer.activities.LibraryActivity;
+import davejab.musicplayer.activities.MainActivity;
 import davejab.musicplayer.activities.fragments.SongFragment;
 import davejab.musicplayer.models.Album;
-import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
 
@@ -62,7 +61,7 @@ public class AlbumAdapter extends ItemAdapter {
             Song songs = new Song(getContext().getContentResolver());
             songs.setItemSelection(getItem());
             List<Item> items = songs.toList();
-            ((LibraryActivity) getContext()).switchFragment(SongFragment.getSongFragment(items));
+            ((MainActivity) getContext()).switchFragment(SongFragment.getSongFragment(items));
         }
     }
 

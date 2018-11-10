@@ -10,7 +10,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import davejab.musicplayer.R;
-import davejab.musicplayer.activities.PlayerActivity;
+import davejab.musicplayer.activities.MainActivity;
+import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
 
@@ -30,8 +31,7 @@ public class SongAdapter extends ItemAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder viewHolder, int i) {
-        Song song = (Song) getItems().get(i);
-        ((ViewHolder) viewHolder).txtTitle.setText(song.getTitle());
+        viewHolder.bindItem(getItems().get(i));
     }
 
     private class ViewHolder extends ItemAdapter.ViewHolder implements View.OnClickListener{
@@ -44,12 +44,14 @@ public class SongAdapter extends ItemAdapter {
         }
 
         @Override
+        public void bindItem(Item item) {
+            setItem(item);
+            this.txtTitle.setText(((Song) getItem()).getTitle());
+        }
+
+        @Override
         public void onClick(View v) {
-            // TODO
-            Intent intent = new Intent(getContext(), PlayerActivity.class);
-            intent.putExtra("songIndex", getItems().indexOf(getItem()));
-            //intent.putExtra("songIndex", getItems());
-            getContext().startActivity(intent);
+            ((MainActivity) getContext()).play(getItems(), getItems().indexOf(getItem()));
         }
     }
 

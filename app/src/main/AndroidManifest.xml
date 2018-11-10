@@ -12,11 +12,7 @@
         android:roundIcon="@drawable/img_play_arrow_white_48"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PlayerActivity"
-            android:launchMode="singleInstance">
-
-        </activity>
-        <activity android:name=".activities.LibraryActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
