@@ -5,6 +5,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore.Audio.Media;
 
+/**
+ * Song class for modeling songs from the android media store.
+ *
+ * @author davejab
+ */
 public class Song extends Album{
 
     private String data;
@@ -36,11 +41,14 @@ public class Song extends Album{
         if (item instanceof Album){
             Album album = (Album) item;
             mergeAlbum(album);
+            // Filter songs by album
             setSelection(Media.ALBUM_KEY+" = '"+album.getAlbumKey()+"'");
+            // Sort by track #
             setOrder(Media.TRACK+" ASC");
         } else if (item instanceof Artist) {
             Artist artist = (Artist) item;
             mergeArtist(artist);
+            // Filter songs by artist
             setSelection(Media.ARTIST+" = '"+artist.getArtist()+"'");
         }
     }
@@ -71,7 +79,7 @@ public class Song extends Album{
     public void setTitle(String title){
         this.title = title;
     }
-    public void setDuration(long duration){
+    private void setDuration(long duration){
         this.duration = duration;
     }
 

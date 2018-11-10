@@ -5,12 +5,18 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore.Audio.Artists;
 
+/**
+ * Artist class for modeling artists from the android media store.
+ *
+ * @author davejab
+ */
 public class Artist extends Item{
 
     private String artist;
 
     public Artist(ContentResolver contentResolver) {
         super(contentResolver);
+        // Sorts artist lists alphabetically
         setOrder(Artists.DEFAULT_SORT_ORDER);
     }
 
@@ -40,7 +46,7 @@ public class Artist extends Item{
         return artist;
     }
 
-    protected void mergeArtist(Artist artist) {
+    void mergeArtist(Artist artist) {
         mergeItem(artist);
         setArtist(artist.getArtist());
     }

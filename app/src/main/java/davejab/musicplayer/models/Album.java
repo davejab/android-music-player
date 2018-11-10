@@ -5,6 +5,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore.Audio.Artists.Albums;
 
+/**
+ * Album class for modeling albums from the android media store.
+ *
+ * @author davejab
+ */
 public class Album extends Artist{
 
     private String album;
@@ -46,7 +51,7 @@ public class Album extends Artist{
         return album;
     }
 
-    protected void mergeAlbum(Album album) {
+    void mergeAlbum(Album album) {
         mergeArtist(album);
         setAlbum(album.getAlbum());
         setAlbumArt(album.getAlbumArt());
@@ -59,7 +64,7 @@ public class Album extends Artist{
     public String getAlbumArt(){
         return this.albumArt;
     }
-    public String getAlbumKey(){
+    String getAlbumKey(){
         return this.albumKey;
     }
     public void setAlbum(String album){
@@ -68,7 +73,7 @@ public class Album extends Artist{
     public void setAlbumArt(String albumArt){
         this.albumArt = albumArt;
     }
-    public void setAlbumKey(String albumKey){
+    private void setAlbumKey(String albumKey){
         this.albumKey = albumKey;
     }
 
