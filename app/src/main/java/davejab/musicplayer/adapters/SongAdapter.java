@@ -1,7 +1,6 @@
 package davejab.musicplayer.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import davejab.musicplayer.R;
 import davejab.musicplayer.activities.MainActivity;
-import davejab.musicplayer.models.Artist;
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
 

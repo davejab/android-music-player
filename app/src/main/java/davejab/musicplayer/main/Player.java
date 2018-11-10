@@ -36,8 +36,12 @@ public class Player implements MediaPlayer.OnCompletionListener {
         return currentSong;
     }
 
-    public long getCurrentPosition(){
+    public long getCurrentDuration(){
         return getMediaPlayer().getCurrentPosition();
+    }
+
+    public long getTotalDuration(){
+        return getCurrentSong().getDuration();
     }
 
     private int getSongCount(){
@@ -57,6 +61,11 @@ public class Player implements MediaPlayer.OnCompletionListener {
                 setCurrentSongIndex(0);
             }
         }
+    }
+
+    public void playSong(int songIndex){
+        setCurrentSongIndex(songIndex);
+        playSong(getCurrentSong());
     }
 
     public void playSong(Song song){
