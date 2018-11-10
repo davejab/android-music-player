@@ -52,12 +52,6 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
         setProgressHandler(new Handler());
 
         setPlayer(player);
-        //Intent intent = getIntent();
-        //int position = intent.getIntExtra("songIndex", 0);
-
-        //getPlayer().setPlaylist(Library.getLibrary(getContentResolver()).getCurrentList());
-        //getPlayer().setCurrentSongIndex(position);
-        //playSong(getPlayer().getCurrentSong());
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override

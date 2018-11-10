@@ -13,8 +13,6 @@ import davejab.musicplayer.models.Song;
 
 public class Player implements MediaPlayer.OnCompletionListener {
 
-//    private static Player PLAYER = null;
-
     private PlayerView playerView;
 
     private MediaPlayer mediaPlayer;
@@ -32,13 +30,6 @@ public class Player implements MediaPlayer.OnCompletionListener {
         setRepeat(false);
         setPlayerView(new PlayerView(activity, this));
     }
-
-//    public static Player getPlayer() {
-//        if (PLAYER == null){
-//            PLAYER = new Player();
-//        }
-//        return PLAYER;
-//    }
 
     public Song getCurrentSong(){
         Song currentSong = (Song) getPlaylist().get(getCurrentSongIndex());
@@ -69,7 +60,6 @@ public class Player implements MediaPlayer.OnCompletionListener {
     }
 
     public void playSong(Song song){
-        // Play song
         try {
             getMediaPlayer().reset();
             getMediaPlayer().setDataSource(song.getData());
