@@ -12,6 +12,7 @@ import davejab.musicplayer.R;
 import davejab.musicplayer.activities.MainActivity;
 import davejab.musicplayer.models.Item;
 import davejab.musicplayer.models.Song;
+import davejab.musicplayer.util.Time;
 
 public class SongAdapter extends ItemAdapter {
 
@@ -35,16 +36,22 @@ public class SongAdapter extends ItemAdapter {
     private class ViewHolder extends ItemAdapter.ViewHolder implements View.OnClickListener{
 
         TextView txtTitle;
+        TextView txtArtist;
+        TextView txtDuration;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.title);
+            txtArtist = itemView.findViewById(R.id.artist);
+            txtDuration = itemView.findViewById(R.id.duration);
         }
 
         @Override
         public void bindItem(Item item) {
             setItem(item);
             this.txtTitle.setText(((Song) getItem()).getTitle());
+            this.txtArtist.setText(((Song) getItem()).getArtist());
+            this.txtDuration.setText(Time.milliSecondsToTimer(((Song) getItem()).getDuration()));
         }
 
         @Override

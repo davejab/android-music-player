@@ -6,7 +6,7 @@ public class Time {
      * Timer Format
      * Hours:Minutes:Seconds
      * */
-    public String milliSecondsToTimer(long milliseconds){
+    public static String milliSecondsToTimer(long milliseconds){
         String finalTimerString = "";
         String secondsString = "";
 
@@ -36,7 +36,7 @@ public class Time {
      * @param currentDuration
      * @param totalDuration
      * */
-    public int getProgressPercentage(long currentDuration, long totalDuration){
+    public static int getProgressPercentage(long currentDuration, long totalDuration){
         Double percentage = (double) 0;
 
         double currentSeconds = (double) (currentDuration / 1000);
@@ -55,7 +55,7 @@ public class Time {
      * @param totalDuration
      * returns current duration in milliseconds
      * */
-    public int progressToTimer(int progress, int totalDuration) {
+    public static int progressToTimer(int progress, int totalDuration) {
         int currentDuration = 0;
         totalDuration = (int) (totalDuration / 1000);
         currentDuration = (int) ((((double)progress) / 100) * totalDuration);

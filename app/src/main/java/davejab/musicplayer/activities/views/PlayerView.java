@@ -41,7 +41,6 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
     private TextView txtCurrentDuration;
     private TextView txtTotalDuration;
 
-    private Time time;
     private Player player;
     private Handler progressHandler;
 
@@ -64,7 +63,6 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
 
         seekBarProgress.setOnSeekBarChangeListener(this);
 
-        setTime(new Time());
         setPlayer(player);
         setProgressHandler(new Handler());
 
@@ -142,7 +140,7 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         getProgressHandler().removeCallbacks(progressUpdater);
-        getPlayer().seek(getTime().progressToTimer(seekBar.getProgress(), (int) getPlayer().getTotalDuration()));
+        getPlayer().seek(Time.progressToTimer(seekBar.getProgress(), (int) getPlayer().getTotalDuration()));
         updateProgressBar();
     }
 
@@ -168,9 +166,9 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
         public void run() {
             long totalDuration = getPlayer().getTotalDuration();
             long currentDuration = getPlayer().getCurrentDuration();
-            txtTotalDuration.setText(getTime().milliSecondsToTimer(totalDuration));
-            txtCurrentDuration.setText(getTime().milliSecondsToTimer(currentDuration));
-            int progress = getTime().getProgressPercentage(currentDuration, totalDuration);
+            txtTotalDuration.setText(Time.milliSecondsToTimer(totalDuration));
+            txtCurrentDuration.setText(Time.milliSecondsToTimer(currentDuration));
+            int progress = Time.getProgressPercentage(currentDuration, totalDuration);
             seekBarProgress.setProgress(progress);
             getProgressHandler().postDelayed(this, 100);
         }
@@ -182,17 +180,11 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
     private Player getPlayer(){
         return this.player;
     }
-    private Time getTime(){
-        return this.time;
-    }
     private void setPlayer(Player player){
         this.player = player;
     }
     private void setProgressHandler(Handler progressHandler){
         this.progressHandler = progressHandler;
-    }
-    private void setTime(Time time){
-        this.time = time;
     }
 
 }
