@@ -7,7 +7,7 @@
     android:background="@color/dark_background">
 
     <include
-        android:id="@+id/app_bar"
+        android:id="@+id/app_bar_menu"
         layout="@layout/app_bar_menu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,15 +24,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
-
-    <!--<fragment-->
-        <!--android:id="@+id/host_fragment"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/app_bar" />-->
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_menu" />
 
 </android.support.constraint.ConstraintLayout>

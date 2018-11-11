@@ -60,8 +60,7 @@ public class AlbumAdapter extends ItemAdapter {
             // TODO
             Song songs = new Song(getContext().getContentResolver());
             songs.setItemSelection(getItem());
-            List<Item> items = songs.toList();
-            ((MainActivity) getContext()).switchFragment(SongFragment.getSongFragment(items));
+            ((MainActivity) getContext()).switchFragment(SongFragment.getSongFragment(songs));
         }
     }
 

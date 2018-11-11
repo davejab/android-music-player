@@ -54,8 +54,7 @@ public class ArtistAdapter extends ItemAdapter {
             // TODO
             Album albums = new Album(getContext().getContentResolver());
             albums.setItemSelection(getItem());
-            List<Item> items = albums.toList();
-            ((MainActivity) getContext()).switchFragment(AlbumFragment.getAlbumFragment(items));
+            ((MainActivity) getContext()).switchFragment(AlbumFragment.getAlbumFragment(albums));
         }
     }
 

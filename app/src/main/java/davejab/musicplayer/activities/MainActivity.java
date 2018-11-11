@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity {
 
         // Create new artist fragment
         Fragment startingFragment = ArtistFragment.getArtistFragment(
-                new Artist(getContentResolver()).toList());
+                new Artist(getContentResolver()));
 
         // Replaces the fragment holder with our starting fragment
         getSupportFragmentManager().beginTransaction()
