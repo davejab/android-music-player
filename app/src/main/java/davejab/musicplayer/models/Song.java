@@ -32,6 +32,7 @@ public class Song extends Album{
                 Media._ID,
                 Media.DATA,
                 Media.TITLE,
+                Media.ARTIST,
                 Media.DURATION,
         };
     }
@@ -60,7 +61,8 @@ public class Song extends Album{
         song.setId(cursor.getLong(cursor.getColumnIndex(getProjection()[0])));
         song.setData(cursor.getString(cursor.getColumnIndex(getProjection()[1])));
         song.setTitle(cursor.getString(cursor.getColumnIndex(getProjection()[2])));
-        song.setDuration(cursor.getLong(cursor.getColumnIndex(getProjection()[3])));
+        song.setArtist(cursor.getString(cursor.getColumnIndex(getProjection()[3])));
+        song.setDuration(cursor.getLong(cursor.getColumnIndex(getProjection()[4])));
         return song;
     }
 
