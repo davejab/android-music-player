@@ -37,16 +37,22 @@ public class ArtistAdapter extends ItemAdapter {
     private class ViewHolder extends ItemAdapter.ViewHolder {
 
         TextView txtArtist;
+        TextView txtSongCount;
+        TextView txtAlbumCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.txtArtist = itemView.findViewById(R.id.artist);
+            this.txtSongCount = itemView.findViewById(R.id.song_count);
+            this.txtAlbumCount = itemView.findViewById(R.id.album_count);
         }
 
         @Override
         public void bindItem(Item item) {
             setItem(item);
             this.txtArtist.setText(((Artist) getItem()).getArtist());
+            this.txtSongCount.setText(String.valueOf(((Artist) getItem()).getNumberOfSongs()));
+            this.txtAlbumCount.setText(String.valueOf(((Artist) getItem()).getNumberOfAlbums()));
         }
 
         @Override
