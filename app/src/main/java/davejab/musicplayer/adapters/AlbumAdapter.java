@@ -52,7 +52,11 @@ public class AlbumAdapter extends ItemAdapter {
             setItem(item);
             Album album = (Album) item;
             this.txtAlbum.setText(album.getAlbum());
-            this.imgAlbum.setImageURI(Uri.parse(album.getAlbumArt()));
+            if (album.getAlbumArt()!= null) {
+                this.imgAlbum.setImageURI(Uri.parse(album.getAlbumArt()));
+            } else {
+                this.imgAlbum.setImageDrawable(getContext().getDrawable(R.drawable.img_nocover));
+            }
         }
 
         @Override

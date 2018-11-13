@@ -1,6 +1,7 @@
 package davejab.musicplayer.activities.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
@@ -23,6 +24,8 @@ import davejab.musicplayer.util.Time;
 public class PlayerView implements SeekBar.OnSeekBarChangeListener{
 
     private static final String TAG = "PlayerView";
+
+    private Context context;
 
     // App bar
     private TextView txtSongTitle;
@@ -63,6 +66,7 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
 
         seekBarProgress.setOnSeekBarChangeListener(this);
 
+        setContext(activity.getApplicationContext());
         setPlayer(player);
         setProgressHandler(new Handler());
 
@@ -154,7 +158,11 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
         txtSongTitle.setText(song.getTitle());
         txtArtist.setText(song.getArtist());
         btnPlay.setImageResource(R.drawable.btn_pause);
-        imgAlbumArt.setImageURI(Uri.parse(song.getAlbumArt()));
+        if (song.getAlbumArt()!= null) {
+            imgAlbumArt.setImageURI(Uri.parse(song.getAlbumArt()));
+        } else {
+            imgAlbumArt.setImageDrawable(getContext().getDrawable(R.drawable.img_nocover));
+        }
         updateProgressBar();
     }
 
@@ -174,11 +182,17 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
         }
     };
 
+    private Context getContext(){
+        return this.context;
+    }
     private Handler getProgressHandler(){
         return this.progressHandler;
     }
     private Player getPlayer(){
         return this.player;
+    }
+    private void setContext(Context context){
+        this.context = context;
     }
     private void setPlayer(Player player){
         this.player = player;
