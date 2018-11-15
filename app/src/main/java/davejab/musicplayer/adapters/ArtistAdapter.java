@@ -9,7 +9,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import davejab.musicplayer.R;
-import davejab.musicplayer.activities.MainActivity;
 import davejab.musicplayer.activities.fragments.AlbumFragment;
 import davejab.musicplayer.models.Album;
 import davejab.musicplayer.models.Artist;
@@ -31,7 +30,7 @@ public class ArtistAdapter extends ItemAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.bindItem(getItems().get(i));
+        viewHolder.bindItem(getItem(i));
     }
 
     private class ViewHolder extends ItemAdapter.ViewHolder {
@@ -40,7 +39,7 @@ public class ArtistAdapter extends ItemAdapter {
         TextView txtSongCount;
         TextView txtAlbumCount;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.txtArtist = itemView.findViewById(R.id.artist);
             this.txtSongCount = itemView.findViewById(R.id.song_count);
@@ -49,7 +48,7 @@ public class ArtistAdapter extends ItemAdapter {
 
         @Override
         public void bindItem(Item item) {
-            setItem(item);
+            super.bindItem(item);
             this.txtArtist.setText(((Artist) getItem()).getArtist());
             this.txtSongCount.setText(String.valueOf(((Artist) getItem()).getNumberOfSongs()));
             this.txtAlbumCount.setText(String.valueOf(((Artist) getItem()).getNumberOfAlbums()));
@@ -57,10 +56,9 @@ public class ArtistAdapter extends ItemAdapter {
 
         @Override
         public void onClick(View v) {
-            // TODO
-            Album albums = new Album(getContext().getContentResolver());
+            Album albums = new Album(getActivity().getContentResolver());
             albums.setItemSelection(getItem());
-            ((MainActivity) getContext()).switchFragment(AlbumFragment.getAlbumFragment(albums));
+            getActivity().switchFragment(AlbumFragment.getAlbumFragment(albums));
         }
     }
 

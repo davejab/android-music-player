@@ -24,20 +24,19 @@ public abstract class ItemFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setRecyclerView((RecyclerView) view.findViewById(R.id.recyclerView));
+        this.recyclerView = view.findViewById(R.id.recyclerView);
     }
 
     public Item getItem(){
         return this.item;
     }
+
     public RecyclerView getRecyclerView(){
         return this.recyclerView;
     }
+
     public void setItem(Item item){
         this.item = item;
-    }
-    private void setRecyclerView(RecyclerView recyclerView){
-        this.recyclerView = recyclerView;
     }
 
 }

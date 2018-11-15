@@ -8,6 +8,7 @@ import android.view.View;
 
 import java.util.List;
 
+import davejab.musicplayer.activities.MainActivity;
 import davejab.musicplayer.models.Item;
 
 public abstract class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
@@ -16,9 +17,9 @@ public abstract class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewH
     private List<Item> items;
     private int itemLayout;
 
-    protected ItemAdapter(Context context, List<Item> items){
-        setContext(context);
-        setItems(items);
+    ItemAdapter(Context context, List<Item> items){
+        this.context = context;
+        this.items = items;
     }
 
     @Override
@@ -26,26 +27,27 @@ public abstract class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewH
         return getItems().size();
     }
 
-    protected LayoutInflater getLayoutInflater(){
-        return LayoutInflater.from(getContext());
+    LayoutInflater getLayoutInflater(){
+        return LayoutInflater.from(this.context);
     }
 
-    protected Context getContext(){
-        return this.context;
+    protected MainActivity getActivity(){
+        return ((MainActivity) this.context);
     }
-    public List<Item> getItems(){
+
+    Item getItem(int id){
+        return getItems().get(id);
+    }
+
+    List<Item> getItems(){
         return this.items;
     }
-    protected int getItemLayout(){
+
+    int getItemLayout(){
         return this.itemLayout;
     }
-    private void setContext(Context context){
-        this.context = context;
-    }
-    private void setItems(List<Item> items){
-        this.items = items;
-    }
-    protected void setItemLayout(int itemLayout){
+
+    void setItemLayout(int itemLayout){
         this.itemLayout = itemLayout;
     }
 
@@ -53,20 +55,17 @@ public abstract class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewH
 
         protected Item item;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
         }
 
         public void bindItem(Item item){
-            setItem(item);
+            this.item = item;
         }
 
         protected Item getItem(){
             return this.item;
-        }
-        protected void setItem(Item item){
-            this.item = item;
         }
 
     }

@@ -49,14 +49,14 @@ public class MainActivity extends FragmentActivity {
 
         // Set views
         setContentView(R.layout.activity_main);
-        setTxtAppBar((TextView) findViewById(R.id.app_bar_title));
-        setSlidingPanelPlayer((SlidingUpPanelLayout) findViewById(R.id.sliding_layout));
+        this.txtAppBar = findViewById(R.id.app_bar_title);
+        this.slidingPanelPlayer = findViewById(R.id.sliding_layout);
 
         // Hide player on initial launch
-        getSlidingPanelPlayer().setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        this.slidingPanelPlayer.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
 
         // Initialise player class
-        setPlayer(new Player(this));
+        this.player = new Player(this);
 
         // Create new artist fragment
         Fragment startingFragment = ArtistFragment.getArtistFragment(
@@ -71,30 +71,18 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         // If player is overlaying the library view, we want to collapse it before navigating back
-        if (getSlidingPanelPlayer() != null && getSlidingPanelPlayer().getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            getSlidingPanelPlayer().setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        if (this.slidingPanelPlayer != null && this.slidingPanelPlayer.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            this.slidingPanelPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
             super.onBackPressed();
         }
     }
 
-    private void showPlayer(){
-        if (getSlidingPanelPlayer() != null) {
+    public void showPlayer(){
+        if (this.slidingPanelPlayer != null) {
             // Fully expand the player layout
-            getSlidingPanelPlayer().setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            this.slidingPanelPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         }
-    }
-
-    /**
-     * Sets the current playlist in the player class and proceeds to play the given position index
-     * @param playlist new playlist of songs to be assigned to the player
-     * @param position selected position index defines what song plays first
-     */
-    public void play(List<Item> playlist, int position){
-        Log.i(TAG, "play called");
-        getPlayer().setPlaylist(playlist);
-        getPlayer().playSong(position);
-        showPlayer();
     }
 
     /**
@@ -115,26 +103,11 @@ public class MainActivity extends FragmentActivity {
      * @param text text used to set the app bar
      */
     public void setAppBarText(String text){
-        getTxtAppBar().setText(text);
+        this.txtAppBar.setText(text);
     }
 
-    private Player getPlayer(){
+    public Player getPlayer(){
         return this.player;
-    }
-    private TextView getTxtAppBar(){
-        return this.txtAppBar;
-    }
-    private SlidingUpPanelLayout getSlidingPanelPlayer(){
-        return this.slidingPanelPlayer;
-    }
-    private void setPlayer(Player player){
-        this.player = player;
-    }
-    private void setTxtAppBar(TextView txtAppBar){
-        this.txtAppBar = txtAppBar;
-    }
-    private void setSlidingPanelPlayer(SlidingUpPanelLayout slidingPanelPlayer){
-        this.slidingPanelPlayer = slidingPanelPlayer;
     }
 
 }

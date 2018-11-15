@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import davejab.musicplayer.R;
-import davejab.musicplayer.activities.MainActivity;
 import davejab.musicplayer.activities.fragments.SongFragment;
 import davejab.musicplayer.models.Album;
 import davejab.musicplayer.models.Item;
@@ -33,7 +32,7 @@ public class AlbumAdapter extends ItemAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.bindItem(getItems().get(i));
+        viewHolder.bindItem(getItem(i));
     }
 
     private class ViewHolder extends ItemAdapter.ViewHolder implements View.OnClickListener{
@@ -41,30 +40,29 @@ public class AlbumAdapter extends ItemAdapter {
         TextView txtAlbum;
         ImageView imgAlbum;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtAlbum = itemView.findViewById(R.id.album);
-            imgAlbum = itemView.findViewById(R.id.albumArt);
+            this.txtAlbum = itemView.findViewById(R.id.album);
+            this.imgAlbum = itemView.findViewById(R.id.albumArt);
         }
 
         @Override
         public void bindItem(Item item) {
-            setItem(item);
+            super.bindItem(item);
             Album album = (Album) item;
             this.txtAlbum.setText(album.getAlbum());
             if (album.getAlbumArt()!= null) {
                 this.imgAlbum.setImageURI(Uri.parse(album.getAlbumArt()));
             } else {
-                this.imgAlbum.setImageDrawable(getContext().getDrawable(R.drawable.img_nocover));
+                this.imgAlbum.setImageDrawable(getActivity().getDrawable(R.drawable.img_nocover));
             }
         }
 
         @Override
         public void onClick(View v) {
-            // TODO
-            Song songs = new Song(getContext().getContentResolver());
+            Song songs = new Song(getActivity().getContentResolver());
             songs.setItemSelection(getItem());
-            ((MainActivity) getContext()).switchFragment(SongFragment.getSongFragment(songs));
+            getActivity().switchFragment(SongFragment.getSongFragment(songs));
         }
     }
 

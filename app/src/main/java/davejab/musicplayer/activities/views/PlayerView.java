@@ -36,8 +36,6 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
 
     // Controls
     private ImageButton btnPlay;
-    private ImageButton btnNext;
-    private ImageButton btnPrevious;
     private ImageButton btnRepeat;
     private ImageButton btnShuffle;
     private SeekBar seekBarProgress;
@@ -50,27 +48,30 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
     public PlayerView(Activity activity, Player player){
         Log.i(TAG, "constructor called");
 
+        ImageButton btnNext;
+        ImageButton btnPrevious;
+
         // Set views
         // TODO getters & setters?
-        btnPlay = activity.findViewById(R.id.btnPlay);
+        this.btnPlay = activity.findViewById(R.id.btnPlay);
         btnNext = activity.findViewById(R.id.btnNext);
         btnPrevious = activity.findViewById(R.id.btnPrevious);
-        btnRepeat = activity.findViewById(R.id.btnRepeat);
-        btnShuffle = activity.findViewById(R.id.btnShuffle);
-        imgAlbumArt = activity.findViewById(R.id.songAlbumArt);
-        seekBarProgress = activity.findViewById(R.id.songProgressBar);
-        txtSongTitle = activity.findViewById(R.id.txt_song_title);
-        txtArtist = activity.findViewById(R.id.txt_artist);
-        txtCurrentDuration = activity.findViewById(R.id.songCurrentDurationLabel);
-        txtTotalDuration = activity.findViewById(R.id.songTotalDurationLabel);
+        this.btnRepeat = activity.findViewById(R.id.btnRepeat);
+        this.btnShuffle = activity.findViewById(R.id.btnShuffle);
+        this.imgAlbumArt = activity.findViewById(R.id.songAlbumArt);
+        this.seekBarProgress = activity.findViewById(R.id.songProgressBar);
+        this.txtSongTitle = activity.findViewById(R.id.txt_song_title);
+        this.txtArtist = activity.findViewById(R.id.txt_artist);
+        this.txtCurrentDuration = activity.findViewById(R.id.songCurrentDurationLabel);
+        this.txtTotalDuration = activity.findViewById(R.id.songTotalDurationLabel);
 
-        seekBarProgress.setOnSeekBarChangeListener(this);
+        this.seekBarProgress.setOnSeekBarChangeListener(this);
 
-        setContext(activity.getApplicationContext());
-        setPlayer(player);
-        setProgressHandler(new Handler());
+        this.context = activity.getApplicationContext();
+        this.player = player;
+        this.progressHandler = new Handler();
 
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        this.btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Log.i(TAG, "toggling pause");
@@ -103,7 +104,7 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
             }
         });
 
-        btnRepeat.setOnClickListener(new View.OnClickListener() {
+        this.btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Log.i(TAG, "toggling repeat");
@@ -116,7 +117,7 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
             }
         });
 
-        btnShuffle.setOnClickListener(new View.OnClickListener() {
+        this.btnShuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Log.i(TAG, "toggling shuffle");
@@ -138,12 +139,12 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        getProgressHandler().removeCallbacks(progressUpdater);
+        removeCallbacks();
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        getProgressHandler().removeCallbacks(progressUpdater);
+        removeCallbacks();
         getPlayer().seek(Time.progressToTimer(seekBar.getProgress(), (int) getPlayer().getTotalDuration()));
         updateProgressBar();
     }
@@ -161,13 +162,17 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
         if (song.getAlbumArt()!= null) {
             imgAlbumArt.setImageURI(Uri.parse(song.getAlbumArt()));
         } else {
-            imgAlbumArt.setImageDrawable(getContext().getDrawable(R.drawable.img_nocover));
+            imgAlbumArt.setImageDrawable(this.context.getDrawable(R.drawable.img_nocover));
         }
         updateProgressBar();
     }
 
+    private void removeCallbacks(){
+        this.progressHandler.removeCallbacks(this.progressUpdater);
+    }
+
     private void updateProgressBar() {
-        getProgressHandler().postDelayed(progressUpdater, 100);
+        this.progressHandler.postDelayed(this.progressUpdater, 100);
     }
 
     private Runnable progressUpdater = new Runnable() {
@@ -178,27 +183,12 @@ public class PlayerView implements SeekBar.OnSeekBarChangeListener{
             txtCurrentDuration.setText(Time.milliSecondsToTimer(currentDuration));
             int progress = Time.getProgressPercentage(currentDuration, totalDuration);
             seekBarProgress.setProgress(progress);
-            getProgressHandler().postDelayed(this, 100);
+            updateProgressBar();
         }
     };
 
-    private Context getContext(){
-        return this.context;
-    }
-    private Handler getProgressHandler(){
-        return this.progressHandler;
-    }
     private Player getPlayer(){
         return this.player;
-    }
-    private void setContext(Context context){
-        this.context = context;
-    }
-    private void setPlayer(Player player){
-        this.player = player;
-    }
-    private void setProgressHandler(Handler progressHandler){
-        this.progressHandler = progressHandler;
     }
 
 }
