@@ -38,7 +38,7 @@ public class SongAdapter extends ItemAdapter {
         TextView txtArtist;
         TextView txtDuration;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.txtTitle = itemView.findViewById(R.id.title);
             this.txtArtist = itemView.findViewById(R.id.artist);
@@ -56,7 +56,6 @@ public class SongAdapter extends ItemAdapter {
         @Override
         public void onClick(View v) {
             getActivity().getPlayer().playList(getItems(), getItems().indexOf(getItem()));
-            getActivity().showPlayer();
         }
     }
 

@@ -6,15 +6,10 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
-import java.util.List;
-
 import davejab.musicplayer.R;
 import davejab.musicplayer.activities.fragments.ArtistFragment;
 import davejab.musicplayer.main.Player;
 import davejab.musicplayer.models.Artist;
-import davejab.musicplayer.models.Item;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -35,8 +30,6 @@ public class MainActivity extends FragmentActivity {
     };
 
     private Player player;
-    private TextView txtAppBar;
-    private SlidingUpPanelLayout slidingPanelPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +42,11 @@ public class MainActivity extends FragmentActivity {
 
         // Set views
         setContentView(R.layout.activity_main);
-        this.txtAppBar = findViewById(R.id.app_bar_title);
-        this.slidingPanelPlayer = findViewById(R.id.sliding_layout);
-
-        // Hide player on initial launch
-        this.slidingPanelPlayer.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
 
         // Initialise player class
         this.player = new Player(this);
 
+        // TODO move all of this to library class
         // Create new artist fragment
         Fragment startingFragment = ArtistFragment.getArtistFragment(
                 new Artist(getContentResolver()));
@@ -71,17 +60,10 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         // If player is overlaying the library view, we want to collapse it before navigating back
-        if (this.slidingPanelPlayer != null && this.slidingPanelPlayer.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            this.slidingPanelPlayer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        if (this.player.getView().isExpanded()) {
+            this.player.getView().collapse();
         } else {
             super.onBackPressed();
-        }
-    }
-
-    public void showPlayer(){
-        if (this.slidingPanelPlayer != null) {
-            // Fully expand the player layout
-            this.slidingPanelPlayer.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         }
     }
 
@@ -103,7 +85,8 @@ public class MainActivity extends FragmentActivity {
      * @param text text used to set the app bar
      */
     public void setAppBarText(String text){
-        this.txtAppBar.setText(text);
+        TextView txtAppBar = findViewById(R.id.app_bar_title);
+        txtAppBar.setText(text);
     }
 
     public Player getPlayer(){

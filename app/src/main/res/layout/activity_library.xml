@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/app_bar_menu"
-        layout="@layout/app_bar_menu"
+        layout="@layout/toolbar_menu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/fragment_host"

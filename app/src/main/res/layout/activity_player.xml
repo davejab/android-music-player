@@ -7,23 +7,24 @@
     android:layout_height="match_parent"
     android:background="@color/dark_background">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar_player"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/dark_app_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
         android:id="@+id/songAlbumArt"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/player_album_art"
-        app:layout_constraintBottom_toTopOf="@+id/player_footer_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/player_footer_bg"
@@ -59,8 +60,8 @@
             android:background="@layout/rounded_corner"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +72,7 @@
                 android:id="@+id/btnRepeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 android:background="@null"
                 android:contentDescription="@string/player_repeat"
                 android:src="@drawable/img_repeat_pressed" />
@@ -90,6 +91,8 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:contentDescription="@string/player_play"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:src="@drawable/btn_play" />
 
             <ImageButton
@@ -104,7 +107,7 @@
                 android:id="@+id/btnShuffle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:background="@null"
                 android:contentDescription="@string/player_shuffle"
                 android:src="@drawable/img_shuffle_pressed" />
@@ -118,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         android:gravity="end"
         android:textColor="@color/dark_highlight"
@@ -131,7 +134,7 @@
         android:id="@+id/songCurrentDurationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="start"

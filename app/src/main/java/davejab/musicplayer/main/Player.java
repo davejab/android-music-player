@@ -37,6 +37,7 @@ public class Player implements MediaPlayer.OnCompletionListener {
     public void playList(List<Item> playlist, int position){
         this.playlist = playlist;
         playSong(position);
+        getView().expand();
     }
 
     private void playSong(int songIndex){
@@ -124,4 +125,7 @@ public class Player implements MediaPlayer.OnCompletionListener {
         this.mediaPlayer.seekTo(position);
     }
 
+    public PlayerView getView() {
+        return playerView;
+    }
 }
